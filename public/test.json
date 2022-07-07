@@ -1,0 +1,52 @@
+{
+  "code": "000000",
+  "msg": "温馨提示: json格式的key需要用双引号引起来，方便接口请求时能够正确解析出json数据",
+  "data": [
+    {
+      "id": 1,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/1.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 2,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/2.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 3,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/3.jpg",
+      "title": "蒹葭苍苍，白露为霜。所谓伊人，在,水一方。\n溯洄从之，道阻且长；溯游从之，宛在水中央。\n蒹葭凄凄，白露未晞[1]。所谓伊人，在水之湄。\n溯洄从之，道阻且跻；溯游从之，宛在水中坻。",
+      "like": 0
+    },{
+      "id": 4,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/4.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 1,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/1.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 2,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/2.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 3,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/3.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 4,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/4.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    },{
+      "id": 4,
+      "img": "http://rekph2v9n.hn-bkt.clouddn.com/5.jpg",
+      "title": "男儿何不带吴钩，收取关山五十州",
+      "like": 0
+    }
+  ]
+}
