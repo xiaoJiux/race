@@ -93,7 +93,18 @@ const routes = [
     meta: {
       title: '举报分享'
     }
-  }
+  },
+  // 反诈案例
+  {
+    path:'/case',
+    name:'case',
+    component:() => import('@/views/study/Anti-fraud-case')
+  },
+  {
+    path:'/case/:id',
+    name:'caseDetail',
+    component:() => import('@/views/study/CaseDetail')
+  },
 
 ]
 

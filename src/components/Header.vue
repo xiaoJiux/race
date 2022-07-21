@@ -1,9 +1,9 @@
 <template>
   <van-sticky>
     <div id="header">
-      <van-icon @click.stop="$router.back()" name="arrow-left"
-                size="26" color="#fff" style="float: left;position: absolute;left: 20px;" class="icon"/>
-      {{title}}
+      <van-icon @click.stop="$router.back()" name="arrow-left" color="#fff"  class="icon"/>
+      <span>{{title}}</span>
+      <span style="width: 18px;height: 18px;"></span>
     </div>
   </van-sticky>
 
@@ -25,5 +25,8 @@ export default {
   font-size: 18px;
   box-sizing: border-box;
   position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 </style>

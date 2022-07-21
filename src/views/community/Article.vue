@@ -2,7 +2,7 @@
 <div id="article">
   <header>
     <van-icon @click.stop="$router.back()" name="arrow-left"
-              size="26" color="#fff" style="float: left;margin-top: 4px" class="icon"/>
+              size="18" color="#fff" style="float: left;margin-top: 4px" class="icon"/>
     {{$route.meta.title}}
   </header>
   <div class="a_container">
@@ -73,7 +73,7 @@ export default {
     box-shadow: 0 2px 6px rgb(103,215,212);
     text-align: center;
     color: #ffffff;
-    font-size: 1.4rem;
+    font-size: 18px;
     padding: 0.8rem;
     box-sizing: border-box;
   }
