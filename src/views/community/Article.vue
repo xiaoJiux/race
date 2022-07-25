@@ -45,7 +45,9 @@
 
 <script>
 import Header from "@/components/Header";
-import WaterFall from "@/components/WaterFall";//下拉刷新
+import WaterFall from "@/components/WaterFall";
+import async from "async";
+//下拉刷新
 
 export default {
   name: "Articles",
@@ -56,10 +58,16 @@ export default {
     }
   },
   mounted() {
-
+    this.getArticle()
   },
   methods:{
-
+    async getArticle(){
+      let {data} =await this.$axios({
+        method: "GET",
+        url:'/posting/getAllUser'
+      })
+      console.log(data)
+    }
   }
 }
 </script>

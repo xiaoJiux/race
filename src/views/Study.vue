@@ -26,11 +26,15 @@
         <img src="../../public/other_icon/study/anli-5.png" style="width: 50px;" alt="">
         <p>诈骗案例</p>
       </div>
-      <div>
+      <div @click="$router.push({
+      path:'/story'
+      })">
         <img src="../../public/other_icon/study/dingwei.png" style="width: 50px;" alt="">
         <p>身边故事</p>
       </div>
-      <div>
+      <div @click="$router.push({
+      path:'/news'
+      })">
         <img src="../../public/other_icon/study/zixun.png" style="width: 50px;" alt="">
         <p>资讯</p>
       </div>
@@ -118,7 +122,7 @@
 <!--    安全资讯-->
     <div class="scarm-list">
       <div class="scarm-list-header">
-        <span class="hot-font">诈骗热榜</span>
+        <span class="hot-font">安全资讯</span>
       </div>
       <div class="safe-list-body">
         <div class="safe-item" v-for="item in safeList">

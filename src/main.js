@@ -11,9 +11,9 @@ import 'vant/lib/index.css';
 Vue.use(Vant);
 //配置$axios
 import axios from 'axios'
-// axios.defaults.baseURL = "http://localhost:3000"
-//允许携带cookie
-// axios.defaults.withCredentials = true
+axios.defaults.baseURL = "http://www.wuhuazai.com"
+// 允许携带cookie
+axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 

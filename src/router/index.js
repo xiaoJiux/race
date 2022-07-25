@@ -105,6 +105,24 @@ const routes = [
     name:'caseDetail',
     component:() => import('@/views/study/CaseDetail')
   },
+  //身边故事
+  {
+    path: '/story',
+    name:'story',
+    component:() => import('@/views/study/Story'),
+    meta: {
+      title: '身边故事'
+    }
+  },
+  //资讯
+  {
+    path:'/news',
+    name:'news',
+    component: () => import('@/views/study/News'),
+    meta: {
+      title: '资讯'
+    }
+  }
 
 ]
 
@@ -113,7 +131,7 @@ const router = new VueRouter({
   mode: 'hash',
   base: process.env.BASE_URL,
   routes
-})
+});
 
 
 export default router
