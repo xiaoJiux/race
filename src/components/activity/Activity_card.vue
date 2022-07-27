@@ -1,24 +1,24 @@
 <template>
   <div id="card">
     <div class="content" @click.stop>
-      <p class="title">{{ data.title }}</p>
+      <p class="title">{{ data.name }}</p>
       <div class="time">
-        <p><span>活动内容：</span>{{data.introduce}}</p>
-        <p><span>报名时间：</span>{{ data.startTime }}</p>
-        <p><span>截止时间：</span>{{ data.overTime }}</p>
+        <p><span>活动内容：</span>{{data.content}}</p>
+        <p><span>报名时间：</span>{{ data.start }}</p>
+        <p><span>截止时间：</span>{{ data.end }}</p>
       </div>
       <div class="information">
-        <p><span>组织学院：</span>&nbsp;&nbsp;{{ data.college }}</p>
-        <p><span>发起者：</span>&nbsp;&nbsp;{{ data.initiator }}</p>
-        <p><span>报名人数：</span>&nbsp;&nbsp;{{ data.regNum }}/{{ data.headcount }}</p>
+        <p><span>组织学院：</span>&nbsp;&nbsp;{{ data.location }}</p>
+        <p><span>发起者：</span>&nbsp;&nbsp;{{ data.userName }}</p>
+        <p><span>报名人数：</span>&nbsp;&nbsp;{{ data.regNum }}/{{ data.number }}</p>
       </div>
       <div class="address">
         <p><span>活动地址：</span></p>
         <p class="address_xx" @click="handlClick">
           <van-icon name="location"/>
-          {{ data.address }}
+          {{ data.location }}
         </p>
-        <Activity_map style="height:60vw;" :EndXY="this.EndXY"></Activity_map>
+        <Activity_map :EndXY="this.EndXY" style="height:60vw;"></Activity_map>
       </div>
     </div>
     <div class="singUp" style="text-align: center;">
@@ -80,7 +80,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 #card {
   //background-image: linear-gradient(to right, rgb(140, 175, 208) 0%, rgb(172, 183, 235) 50%, rgb(177, 173, 235) 100%);
   width: 85vw;
@@ -98,9 +98,10 @@ export default {
   .content {
     .title {
       text-align: center;
-      font-size: 2.5rem;
-      padding: 1.8rem;
+      font-size: 2rem;
+      padding: 1.8rem 0;
       margin: 0;
+
     }
 
     .time, .information, .address {

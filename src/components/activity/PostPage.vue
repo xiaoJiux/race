@@ -1,23 +1,23 @@
 <template>
   <div id="postPage">
     <header>
-      <van-icon @click.stop="$router.back()" name="arrow-left"
-                size="18" color="#fff" style="float: left;margin-top: 4px" class="icon"/>
+      <van-icon class="icon" color="#fff"
+                name="arrow-left" size="18" style="float: left;margin-top: 4px" @click.stop="$router.back()"/>
       贴子
     </header>
     <div class="swiper-container">
       <div class="swiper-wrapper">
-        <div class="swiper-slide" v-for="(item,index) in images" :key="index">
-          <img class="swiper-img" :src="item"/>
-          <p class="title">远离诈骗</p>
+        <div v-for="(item,index) in artList" :key="index" class="swiper-slide">
+          <img :src="item.img" class="swiper-img"/>
+          <p class="title">{{item.name}}</p>
           <article>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!远离诈骗!
+            {{item.content}}
           </article>
           <p class="drop">······</p>
           <div class="btm">
-            <van-icon @click="isCollect" v-if="!collect"  name="star-o" size="24" color="rgb(119,224,220)" />
-            <van-icon @click="isCollect" v-else  name="star" size="24" color="rgb(119,224,220)" />
+            <van-icon v-if="!collect" color="rgb(119,224,220)"  name="star-o" size="24" @click="isCollect" />
+            <van-icon v-else color="rgb(119,224,220)"  name="star" size="24" @click="isCollect" />
             <img src="../../../public/other_icon/share.png" />
           </div>
         </div>
@@ -37,12 +37,7 @@ export default {
   data() {
     return {
       collect:false,//是否收藏
-      images: [
-        require('../../assets/tesImg/q.jpeg'),
-        require('../../assets/tesImg/i.jpg'),
-        require('../../assets/tesImg/o.jpg'),
-        require('../../assets/tesImg/z.png'),
-      ],
+      artList: []
 
     }
   },
@@ -50,35 +45,53 @@ export default {
     //收藏
     isCollect(){
       this.collect = !this.collect
+    },
+    //请求数据
+    async getArticle(){
+      let {data} =await this.$axios({
+        method: "GET",
+        url:'/posting/getAllUser'
+      })
+      console.log(data)
+      this.artList = data
+      if(this.artList.length > 0){
+        setTimeout(() => {
+          let swiper = new Swiper('.swiper-container', {
+            effect: 'coverflow',
+            loop: true,
+            grabCursor: true,
+            centeredSlides: true,
+            slidesPerView: 'auto',
+            autoplay: 3000,
+            autoplayDisableOnInteraction: false,
+            coverflow: {
+              rotate: 15,
+              stretch: 0,
+              depth: 40,
+              modifier: 1,//间距
+              slideShadows: false,
+            },
+            spaceBetween: 10,
+            navigation: {
+              nextEl: ".next",
+              prevEl: ".prev",
+            }
+          })
+        },200)
+
+
+      }
     }
   },
   mounted() {
-    let swiper = new Swiper('.swiper-container', {
-      effect: 'coverflow',
-      loop: true,
-      grabCursor: true,
-      centeredSlides: true,
-      slidesPerView: 'auto',
-      autoplay: 3000,
-      autoplayDisableOnInteraction: false,
-      coverflow: {
-        rotate: 15,
-        stretch: 0,
-        depth: 40,
-        modifier: 1,//间距
-        slideShadows: false,
-      },
-      spaceBetween: 10,
-      navigation: {
-        nextEl: ".next",
-        prevEl: ".prev",
-      }
-    })
+
+    this.getArticle()
+    console.log(this.$route.params)
   },
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 header {
   height: 22vh;
   background: linear-gradient(to bottom right, rgb(114, 235, 214), rgb(103, 215, 212));

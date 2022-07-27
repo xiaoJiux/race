@@ -7,11 +7,15 @@ import 'vant/lib/index.less';
 //导入vant组件
 import Vant from 'vant';
 import 'vant/lib/index.css';
-
-Vue.use(Vant);
 //配置$axios
 import axios from 'axios'
+
+Vue.use(Vant);
 axios.defaults.baseURL = "http://www.wuhuazai.com"
+
+// if(localStorage.getItem('token') !== null ){
+//
+// }
 // 允许携带cookie
 axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios

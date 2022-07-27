@@ -1,41 +1,29 @@
 <template>
 <div id="article">
   <header>
-    <van-icon @click.stop="$router.back()" name="arrow-left"
-              size="18" color="#fff" style="float: left;margin-top: 4px" class="icon"/>
+    <van-icon class="icon" color="#fff"
+              name="arrow-left" size="18" style="position:absolute;left: 10px;margin-top: 4px" @click.stop="$router.back()"/>
     {{$route.meta.title}}
   </header>
   <div class="a_container">
-    <div class="article_card" @click="$router.push({
-    // path:'/article/123'
-    path:`/article/${123}`
+    <div v-for="(item,index) in artList" :key="index" class="article_card" @click="$router.push({
+    path:`/article/${item.id}`,
+    params: {
+      id: item.id,
+      artList
+    }
     })">
       <van-image
-        width="38vw"
-        height="32vw"
+        :src="item.img"
         fit="cover"
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
+        height="32vw"
+        width="38vw"
       />
       <div class="word_content">
-        <p>玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡</p>
+        <p>{{ item.content }}</p>
         <div class="xx_content">
-          <span class="out_name">xxx</span>
-          <span class="time">2022-07-08 17:51</span>
-        </div>
-      </div>
-    </div>
-    <div class="article_card">
-      <van-image
-        width="38vw"
-        height="32vw"
-        fit="cover"
-        src="https://img01.yzcdn.cn/vant/cat.jpeg"
-      />
-      <div class="word_content">
-        <p>玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡玛卡巴卡</p>
-        <div class="xx_content">
-          <span class="out_name">xxx</span>
-          <span class="time">2022-07-08 17:51</span>
+          <span class="out_name">{{ item.name }}</span>
+          <span class="time">{{item.time}}</span>
         </div>
       </div>
     </div>
@@ -46,7 +34,7 @@
 <script>
 import Header from "@/components/Header";
 import WaterFall from "@/components/WaterFall";
-import async from "async";
+
 //下拉刷新
 
 export default {
@@ -54,7 +42,15 @@ export default {
   components:{Header,WaterFall},
   data(){
     return {
-
+      artList:[
+        // {
+        //   id:1,
+        //   name:'xxx',
+        //   img:'https://img01.yzcdn.cn/vant/cat.jpeg',
+        //   content: 'hahahahahahahahahaha',
+        //   time:'2022-07-08 17:51'
+        // }
+      ]
     }
   },
   mounted() {
@@ -67,15 +63,17 @@ export default {
         url:'/posting/getAllUser'
       })
       console.log(data)
+      this.artList = data
     }
   }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 #article{
   position: relative;
   header{
+    position: relative;
     height: 22vh;
     background: linear-gradient(to bottom right,rgb(114,235,214),rgb(103,215,212));
     box-shadow: 0 2px 6px rgb(103,215,212);
@@ -105,7 +103,7 @@ export default {
         overflow: hidden;
       }
       .word_content{
-        max-width: 46vw;
+        width: 46vw;
         margin-left: 15px;
         position: relative;
         p{

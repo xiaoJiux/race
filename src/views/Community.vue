@@ -4,7 +4,7 @@
       <div class="t_header">
         <p>Logo</p>
         <span>社区</span>
-        <img src="../../public/other_icon/search.png" alt="">
+        <img alt="" src="../../public/other_icon/search.png">
       </div>
       <Slider/>
     </header>
@@ -14,19 +14,19 @@
     })"
       >
         <p>反诈行动</p>
-        <img src="../../public/other_icon/action.png" alt="">
+        <img alt="" src="../../public/other_icon/action.png">
       </div>
       <div class="item" @click="$router.push({
     path: '/article'
     })">
         <p>贴子</p>
-        <img src="../../public/other_icon/post.png" alt="">
+        <img alt="" src="../../public/other_icon/post.png">
       </div>
       <div class="item" @click="$router.push({
     path: '/interactive'
     })">
         <p>警民互动</p>
-        <img src="../../public/other_icon/postman.png" alt="">
+        <img alt="" src="../../public/other_icon/postman.png">
       </div>
     </div>
     <div class="container">
@@ -35,32 +35,32 @@
           <div class="point"></div>
           <span>举报分享</span>
         </div>
-        <span>查看更多<van-icon name="arrow" color="#010101"/></span>
+        <span>查看更多<van-icon color="#010101" name="arrow"/></span>
       </div>
       <div class="list">
 
-        <div class="card" @click="$router.push({name:'shareReport'})">
+        <div v-for="(item,index) in list" class="card" @click="$router.push({name:'shareReport',
+          params: {item}
+        })">
           <div class="card_header">
             <div class="left">
               <van-image
-                round
-                width="3rem"
-                height="3rem"
                 fit="cover"
+                height="3rem"
+                round
                 src="https://img01.yzcdn.cn/vant/cat.jpeg"
+                width="3rem"
               />
-              <p>张三</p>
+              <p>{{item.authorName}}</p>
             </div>
             <div class="right">
-              虚拟网路平台诈骗
+              {{ item.type }}
             </div>
           </div>
-          <article>
-            如果你发现了诈骗账号、网站和APP,欢迎在以下网站进行积极举报,同时可以拨打110电话告知诈骗信息，帮助打击违反犯罪。
-          </article>
+          <article>{{item.content}}</article>
           <div class="b_info">
-            <span class="user_red">阅读&nbsp;1234</span>
-            <span class="rout_date">2022.10.1</span>
+            <span class="user_red">阅读&nbsp;{{ item.readNum }}</span>
+            <span class="rout_date">{{item.time}}</span>
           </div>
         </div>
 
@@ -74,11 +74,25 @@ import Slider from "@/components/Slider";
 
 export default {
   name: "Community",
-  components: {Slider}
+  components: {Slider},
+  data(){
+    return {
+      list:[{
+        id:1,//ID
+        type:'虚拟网络平台诈骗',//举报的诈骗类型
+        content:'如果你发现了诈骗账号、网站和APP,欢迎在以下网站进行积极举报,同时可以拨打110电话告知诈骗信息，帮助打击违反犯罪。\n'
+        ,//内容
+        readNum:1234,//阅读量
+        time:'2022-01-16',//时间
+        authorName:'张三',//举报人名(作者名)
+        img:'https://img01.yzcdn.cn/vant/cat.jpeg',//头像图片地址
+      }]
+    }
+  }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 #community {
   margin-bottom: 10vh;
 
@@ -165,8 +179,7 @@ export default {
       border-radius: 25px;
       margin: 15px 0;
       box-shadow: 2px 2px 4px rgb(187, 187, 187);
-      padding: 5%;
-      padding-bottom: 30px;
+      padding: 5% 5% 30px;
       position: relative;
 
       .card_header {

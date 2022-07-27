@@ -4,7 +4,7 @@
     <div class="t_header">
       <p>Logo</p>
       <span>安全学堂</span>
-      <img src="../../public/other_icon/search.png" alt="">
+      <img alt="" src="../../public/other_icon/search.png">
     </div>
   </header>
   <div>
@@ -16,26 +16,26 @@
 <!--  推荐-->
   <div class="recommend">
     <div class="title">
-      <img src="../../public/other_icon/study/commd.png" style="width: 22px;" alt="">
+      <img alt="" src="../../public/other_icon/study/commd.png" style="width: 22px;">
       为您推荐
     </div>
     <div class="list-icon">
       <div @click="$router.push({
       path:'/case'
       })">
-        <img src="../../public/other_icon/study/anli-5.png" style="width: 50px;" alt="">
+        <img alt="" src="../../public/other_icon/study/anli-5.png" style="width: 50px;">
         <p>诈骗案例</p>
       </div>
       <div @click="$router.push({
       path:'/story'
       })">
-        <img src="../../public/other_icon/study/dingwei.png" style="width: 50px;" alt="">
+        <img alt="" src="../../public/other_icon/study/dingwei.png" style="width: 50px;">
         <p>身边故事</p>
       </div>
       <div @click="$router.push({
       path:'/news'
       })">
-        <img src="../../public/other_icon/study/zixun.png" style="width: 50px;" alt="">
+        <img alt="" src="../../public/other_icon/study/zixun.png" style="width: 50px;">
         <p>资讯</p>
       </div>
 
@@ -50,11 +50,11 @@
     <div class="story-body">
       <div class="user">
         <van-image
-          width="55px"
-          height="55px"
-          fit="cover"
-          round
           :src="storyList[0].author.txUrl"
+          fit="cover"
+          height="55px"
+          round
+          width="55px"
         />
         <div class="u-t-n">
           <p class="name">{{storyList[0].author.name}}</p>
@@ -62,7 +62,7 @@
         </div>
       </div>
       <div class="u-report">
-        <img src="../../public/other_icon/study/miaozhun.png" alt="">
+        <img alt="" src="../../public/other_icon/study/miaozhun.png">
         <span>举报对象:&nbsp;&nbsp;{{storyList[0].report}}</span>
       </div>
       <div class="s-content">
@@ -73,17 +73,17 @@
       </div>
       <div class="u-statement">
         <div :class="useful===false?'':'change'" @click="isUseful">
-          <van-icon size="14" name="good-job-o" />
+          <van-icon name="good-job-o" size="14" />
           <span>1234有用</span>
         </div>
         <span class="shu">|</span>
         <div :class="comfort===false?'':'change'">
-          <van-icon size="14" name="like-o" @click="isComfort"  />
+          <van-icon name="like-o" size="14" @click="isComfort"  />
           <span>1234安慰</span>
         </div>
       </div>
       <div class="s-num">
-        <img src="../../public/other_icon/study/xiaoxi.png" alt="">
+        <img alt="" src="../../public/other_icon/study/xiaoxi.png">
         <span class="p-num">已有{{storyNum}}人分享了自己的故事</span>
         <van-icon name="arrow" />
       </div>
@@ -98,8 +98,8 @@
         <span class="scarm-more">查看更多&nbsp;<van-icon name="arrow" /></span>
       </div>
       <div class="scarm-list-body">
-        <div class="scarm-item" v-for="item in hotList" :key="item.id">
-          <div class="first" :class="'top'+item.id">{{item.id}}</div>
+        <div v-for="item in hotList" :key="item.id" class="scarm-item">
+          <div :class="'top'+item.id" class="first">{{item.id}}</div>
           <div class="main-content">
             <p class="scarm-title">{{item.title}}</p>
             <p>
@@ -110,11 +110,11 @@
             </p>
           </div>
           <van-image
-            width="116px"
-            height="78px"
-            fit="cover"
             :src="item.imgUrl"
+            fit="cover"
+            height="78px"
             style="margin-right: 10px;border-radius: 15px;overflow: hidden"
+            width="116px"
           />
         </div>
       </div>
@@ -125,7 +125,7 @@
         <span class="hot-font">安全资讯</span>
       </div>
       <div class="safe-list-body">
-        <div class="safe-item" v-for="item in safeList">
+        <div v-for="item in safeList" class="safe-item">
           <div class="word-container">
 <!--            标题-->
             <p class="safe-title">{{item.title}}</p>
@@ -133,11 +133,11 @@
             <p class="platform">{{item.platform}}</p>
           </div>
           <van-image
-            width="128px"
-            height="85px"
-            fit="cover"
             :src="item.imgUrl"
+            fit="cover"
+            height="85px"
             style="margin-right: 10px;border-radius: 15px;overflow: hidden"
+            width="128px"
           />
         </div>
       </div>
@@ -153,19 +153,22 @@ export default {
     return {
       useful:false,//是否有用,默认否
       comfort:false,//是否安慰,默认否,
-      storyList: [{
-        author:{
+      storyList: [//身边故事
+        {
+        author:{//发帖人信息
           id:1,
           name:'张三',
           sendTime:'2022-02-02',
           txUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',
-          content: '承诺收益、引诱开户入金。最典型的就是资金盘，一些不法人士会通过宣传自己的本事,编造一些历史高收益业绩来忽悠投资者投资,对外宣称保证盈利，100%盈利等口号，当他们聚拢足够多的资金时，就会携款私逃。',//举报内容
-          sort:'资金欺诈行为',//分类
-        },//发帖人信息
-        report:'1101*****12',//举报对象
+          content: '承诺收益、引诱开户入金。最典型的就是资金盘，一些不法人士会通过宣传自己的本事,编造一些历史高收益业绩来忽悠投资者投资,对外宣称保证盈利，100%盈利等口号，当他们聚拢足够多的资金时，就会携款私逃。',
+          //举报内容
+          sort:'资金欺诈行为',//分类(话题)
+        },
+        report:'1101*****12',//举报对象手机号
         usefulNum:3454,//认为有用数目用户
         comfortNum:34413,//表示安慰数目用户
-      }],//身边故事
+        }
+        ],
       storyNum:1000,//故事数目,
       hotList:[
         {
@@ -189,19 +192,19 @@ export default {
       }],//诈骗热榜
       safeList:[
         {
-          id:'',//id
+          id:1,//id
           platform:'宁波举报中心',//发帖机构,
           title:'注意!这些消息千万别告诉别人!',//内容
           imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
           content:'内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',//内容
         },{
-          id:'',//id
+          id:2,//id
           platform:'宁波举报中心',//发帖机构,
           title:'注意!这些消息千万别告诉别人!',//内容
           imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
           content:'内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',//内容
         },{
-          id:'',//id
+          id:3,//id
           platform:'宁波举报中心',//发帖机构,
           title:'注意!这些消息千万别告诉别人!',//内容
           imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
@@ -221,7 +224,7 @@ export default {
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 #study{
   padding-bottom: 10vh;
   header {
@@ -406,7 +409,7 @@ export default {
           height: 36px;
           border-radius: 100%;
           text-align: center;
-          //line-height: 38px;
+          line-height: 36px;
           font-size: 26px;
           color: white;
           margin-right: 5px;

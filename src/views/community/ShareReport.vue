@@ -4,14 +4,17 @@
     <article>
       <div class="title">
         <div class="userInfo">
-          <van-image
-            round
-            width="75px"
-            height="75px"
-            fit="cover"
-            src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
-          />
-          <span>{{ reportInfo.author }}</span>
+          <div class="user" style="display: flex;align-items: center">
+            <van-image
+              :src="reportInfo.img"
+              fit="cover"
+              height="75px"
+              round
+              width="75px"
+            />
+            <span>zhang</span>
+          </div>
+          <span></span>
         </div>
         <div class="type">虚拟网络平台诈骗</div>
       </div>
@@ -19,7 +22,7 @@
       <!--    阅读数目,时间-->
       <div class="read_time">
         <span>阅读{{ reportInfo.readNum }}</span>
-        <span class="time">{{ reportInfo.issueDate }}</span>
+        <span class="time">{{ reportInfo.time }}</span>
       </div>
     </article>
     <div class="van-hairline--top" style="text-align: center;padding-top: 15px;">
@@ -28,24 +31,24 @@
 
     <div class="reply">
       <ul>
-        <li>
+        <li v-for="(item,index) in dsicuss" :key="index">
           <div class="userHeader">
             <van-image
+              :src="item.img"
+              fit="cover"
+              height="55px"
               round
               width="55px"
-              height="55px"
-              fit="cover"
-              src="https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg"
             />
-            <span>张三</span>
+            <span>{{ item.name }}</span>
           </div>
-          <p>小心被骗啊啊啊!!!</p>
-          <div class="b_info">
-            <img @click="likeFn" v-if="Good===false" src="../../../public/other_icon/Good.png" alt="">
-            <img @click="likeFn" v-else style="width: 24px;height: 24px;" src="../../../public/other_icon/yGood.png" alt="">
-            <div style="width: 25px"></div>
-            <img @click="unlikeFn" v-if="notGood===false" src="../../../public/other_icon/Cai.png" alt="">
-            <img @click="unlikeFn" v-else src="../../../public/other_icon/yCai.png" alt="">
+          <p>{{ item.content }}</p>
+          <div class="b_info" style="display: flex;align-items: center">
+            <img v-if="Good===false" alt="" src="../../../public/other_icon/Good.png" @click="likeFn">
+            <img v-else alt="" src="../../../public/other_icon/yGood.png" style="width: 24px;height: 24px;" @click="likeFn">
+            <div style="padding: 0 8px;font-size: 12px;">{{ item.likedNum }}</div>
+<!--            <img v-if="notGood===false" alt="" src="../../../public/other_icon/Cai.png" @click="unlikeFn">-->
+<!--            <img v-else alt="" src="../../../public/other_icon/yCai.png" @click="unlikeFn">-->
           </div>
         </li>
       </ul>
@@ -66,14 +69,22 @@ export default {
       Good:false,//点赞
       notGood:false,//踩
       reportInfo: {
-        author: '',//作者id
-        tx: '',//头像
+        id: Number,//文章id
+        img: '',//头像
         authorName: 'z张三',//作者昵称
-        content: '如果你发现了诈骗账号、网站和APP,欢迎在以下网站进行积极举报，同时可以拨打110电话告知诈骗信息,帮助打击违反犯罪。\n',//内容
-        readNum: 1251,//阅读数
-        issueDate: '2022.01.16',//发送时间
-
-      }
+        content: '',//内容
+        readNum: Number,//阅读数
+        time: '',//发送时间
+        type: ''//诈骗类型
+      },
+      dsicuss:[
+        {//评论区数据
+          username:'张三',//用户名
+          img:'https://fastly.jsdelivr.net/npm/@vant/assets/cat.jpeg',//用户头像
+          content:'内容',
+          likedNum:1,//获赞数目
+        }
+      ]
     }
   },
   methods:{
@@ -83,17 +94,16 @@ export default {
       }
       this.Good = !this.Good
     },
-    unlikeFn(){
-      if(this.notGood === false && this.Good === true){
-       return  Toast.fail('您已经点赞了,不可以点赞哦');
-      }
-      this.notGood = !this.notGood
-    },
+
+  },
+  mounted(){
+    this.reportInfo = this.$route.params.item
+    console.log(this.reportInfo)
   }
 }
 </script>
 
-<style scoped lang="less">
+<style lang="less" scoped>
 #shareReport {
   article {
     padding: 20px 20px 0;

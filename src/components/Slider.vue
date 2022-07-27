@@ -1,7 +1,7 @@
 <template>
-  <div class="slider"   @mouseover="stopAutoPlay" @mouseleave="setAutoPlay">
+  <div class="slider"   @mouseleave="setAutoPlay" @mouseover="stopAutoPlay">
     <div class="slider-list">
-      <div :class="['slider-item', setItemClass(index)]" v-for="(item, index) of list" :key="index">
+      <div v-for="(item, index) of list" :key="index" :class="['slider-item', setItemClass(index)]">
         <img :src="item">
       </div>
     </div>
@@ -10,14 +10,15 @@
 
 <script>
 /* eslint-disable */
-import swipe1 from '../assets/swipe.jpg'
-import swipe2 from '../assets/swipe.jpg'
+import swipe1 from '../assets/tesImg/i.jpg'
+import swipe2 from '../assets/tesImg/o.jpg'
+import swipe3 from '../assets/tesImg/w.jpg'
 
 export default {
   name:'Slider',
   data() {
     return {
-      list: [swipe1, swipe2, swipe1],
+      list: [swipe1, swipe2, swipe3],
       timer: null,
       currentIndex: 0,
     };

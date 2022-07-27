@@ -10,43 +10,43 @@ const routes = [
     name: 'home',
     component: Home,
     meta: {
-      title:'首页',
+      title: '首页',
       showTabBar: true//在路由meta对象设置一个布尔值showTabBar
     }
   },
   {
-    path:'/community',
-    name:'community',
-    component:() =>import('@/views/Community'),
+    path: '/community',
+    name: 'community',
+    component: () => import('@/views/Community'),
     meta: {
       showTabBar: true
     }
   },
   {
-    path:'/study',
-    name:'study',
-    component:() =>import('@/views/Study'),
+    path: '/study',
+    name: 'study',
+    component: () => import('@/views/Study'),
     meta: {
       showTabBar: true
     }
   },
   {
-    path:'/user',
-    name:'user',
-    component:() =>import('@/views/User'),
+    path: '/user',
+    name: 'user',
+    component: () => import('@/views/User'),
     meta: {
       showTabBar: true
     }
   },
   {
-    path:'/shareTips',
-    name:'shareTips',
-    component:() =>import('@/views/ShareTips')
+    path: '/shareTips',
+    name: 'shareTips',
+    component: () => import('@/views/ShareTips')
   },
   {
-    path:'/article',
-    name:'article',
-    component:() =>import('@/views/community/Article'),
+    path: '/article',
+    name: 'article',
+    component: () => import('@/views/community/Article'),
     meta: {
       title: '贴子'
     }
@@ -54,41 +54,41 @@ const routes = [
   },
   //贴子详情
   {
-    path:'/article/:id',
-    name:'postPage',
-    component:() =>import('@/components/activity/PostPage')
+    path: '/article/:id',
+    name: 'postPage',
+    component: () => import('@/components/activity/PostPage')
   },
   {
-    path:'/activity',
-    name:'activity',
-    component:() =>import('@/views/community/Activity'),
+    path: '/activity',
+    name: 'activity',
+    component: () => import('@/views/community/Activity'),
     meta: {
       title: '反诈行动'
     }
   },
   {
-    path:'/signIn',
-    name:'User_SignIn',
-    component:() =>import('@/views/community/User_SignIn'),
+    path: '/signIn',
+    name: 'User_SignIn',
+    component: () => import('@/views/community/User_SignIn'),
     meta: {
-      title:'活动签到'
+      title: '活动签到'
     }
   },
   {
     path: '/interactive',
-    name:'interactive',
+    name: 'interactive',
     component: () => import('@/views/community/Interactive')
   },
   {
     // 聊天页面
-    path:'/Chatroom',
-    name:'chatroom',
-    component:() =>  import('@/views/community/Chatroom')
+    path: '/Chatroom',
+    name: 'chatroom',
+    component: () => import('@/views/community/Chatroom')
   },
   //举报分享
   {
-    path:'/shareReport',
-    name:'shareReport',
+    path: '/shareReport',
+    name: 'shareReport',
     component: () => import('@/views/community/ShareReport'),
     meta: {
       title: '举报分享'
@@ -96,33 +96,68 @@ const routes = [
   },
   // 反诈案例
   {
-    path:'/case',
-    name:'case',
-    component:() => import('@/views/study/Anti-fraud-case')
+    path: '/case',
+    name: 'case',
+    component: () => import('@/views/study/Anti-fraud-case')
   },
   {
-    path:'/case/:id',
-    name:'caseDetail',
-    component:() => import('@/views/study/CaseDetail')
+    path: '/case/:id',
+    name: 'caseDetail',
+    component: () => import('@/views/study/CaseDetail')
   },
   //身边故事
   {
     path: '/story',
-    name:'story',
-    component:() => import('@/views/study/Story'),
+    name: 'story',
+    component: () => import('@/views/study/Story'),
     meta: {
       title: '身边故事'
     }
   },
   //资讯
   {
-    path:'/news',
-    name:'news',
+    path: '/news',
+    name: 'news',
     component: () => import('@/views/study/News'),
     meta: {
       title: '资讯'
     }
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: () => import('@/views/Login')
+  },
+  {
+    path: '/activation',
+    name: 'activation',
+    component: () => import('@/views/Activation')
+  },
+  //二维码
+  {
+    path: '/QR-code',
+    name: 'QR-code',
+    component: () => import('@/views/home/Qrcode')
+  },
+  //电子书
+  {
+    path: '/bookshelf',
+    name: 'bookshelf',
+    component: () => import('@/views/home/Bookshelf')
+  },
+  //书本详情页
+  {
+    path: '/book',
+    name: 'book',
+    component: () => import('@/views/home/Book')
+  },
+  //短视频
+  {
+    path: '/video',
+    name: 'video',
+    component: () => import('@/views/home/Video')
   }
+
 
 ]
 
