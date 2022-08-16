@@ -2,8 +2,8 @@
   <div id="user">
     <div class="user-nh">
       <div class="user-msg">
-        <p class="name">老叶</p>
-        <p class="joinTime">加入XXX的第123天</p>
+        <p class="name">{{userData.name}}</p>
+        <p class="joinTime">欢迎加入24小时反诈中心</p>
       </div>
       <div class="tx">
         <van-image
@@ -16,69 +16,112 @@
       </div>
     </div>
     <div class="info-block">
-<!--      学习次数-->
+      <!--      学习次数-->
       <div class="learn-num">
-        <p>学习总数</p>
-        <p><span>21</span>次</p>
-        <p>日积月累,能辨虚实</p>
+        <p>学习天数</p>
+        <p><span>{{pointD?pointD.clockDay:0}}</span>天</p>
+        <p style="font-size: 14px">签到</p>
       </div>
-<!--      积分-->
+      <!--      积分-->
       <div class="integral">
         <p>学习积分</p>
-        <p><span>1234</span></p>
+        <p><span>{{pointD?pointD.sumNumber:0}}</span></p>
         <p>积分可进行兑换</p>
       </div>
     </div>
-    <div class="list">
-      <div class="item van-hairline--bottom" @click="show = true">
-        <div class="left">
-          <img src="../../public/other_icon/user/link.png" >
-          <span>学院绑定</span>
-        </div>
-        <div class="right">
-          <span style="font-size: 12px;color: #cccccc">未绑定</span>
-          <van-icon color="#cccccc" name="arrow" size="24" />
-        </div>
+    <div class="data"
+         style="margin: 10px;background-color: rgb(228,250,248);display: flex;justify-content: space-between;align-items: center">
+      <div id="myEcharts" ref="Echarts" style="width: 45vw;height: 35vw;"></div>
+      <div class="show-data" style="max-width: 45vw;padding: 15px 2px;">
+        <ul style="display: flex;flex-wrap: wrap;justify-content: space-between;font-size: 10px">
+          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">签到：<span>{{ pointD?pointD.type1:0 }}</span></li>
+          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">评论：<span>{{ pointD?pointD.type2:0 }}</span></li>
+          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">心得：<span>{{ pointD?pointD.type3:0 }}</span></li>
+          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">活动：<span>{{ pointD?pointD.type:0 }}</span></li>
+          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">收藏：<span>{{ pointD?pointD.type6:0 }}</span></li>
+        </ul>
       </div>
+    </div>
+    <div class="module-list" style="background-color: rgb(229,249,250)">
+      <div class="item" @click="$router.push({
+      path: '/enterActivity'
+      })">
+        <img alt="" src="../assets/user/1.png">
+        <p>我的活动</p>
+      </div>
+      <div class="item" @click="$router.push({
+      path: '/myDiscuss'
+      })">
+        <img alt="" src="../assets/user/2.png">
+        <p>我的评论</p>
+      </div>
+      <div class="item">
+        <img alt="" src="../assets/user/3.png">
+        <p>我的收藏</p>
+      </div>
+      <div class="item" @click="$router.push({
+      path:'/MyExperience'
+      })">
+        <img alt="" src="../assets/user/4.png">
+        <p>我的心得</p>
+      </div>
+      <div class="item" @click="$router.push({
+      path:'/issuanceActivity'
+      })">
+        <img alt="" src="../assets/user/5.png">
+        <p>发布活动</p>
+      </div>
+      <div class="item" @click="$router.push({
+      path:'/audit'
+      })">
+        <img alt="" src="../assets/user/6.png">
+        <p>活动审核</p>
+      </div>
+      <div class="item">
+        <img alt="" src="../assets/user/7.png">
+        <p>积分兑换</p>
+      </div>
+    </div>
+    <div class="list">
       <div class="item van-hairline--bottom">
         <div class="left">
-          <img src="../../public/other_icon/user/msg.png" >
+          <img src="../../public/other_icon/user/msg.png">
           <span>信息中心</span>
         </div>
         <div class="right">
-          <van-icon color="#cccccc" name="arrow" size="24" />
+          <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
       <div class="item van-hairline--bottom">
         <div class="left">
-          <img src="../../public/other_icon/user/fate.png" >
-          <span>账户安全</span>
+          <img src="../../public/other_icon/user/fate.png">
+          <span>账户管理</span>
         </div>
         <div class="right">
-          <van-icon color="#cccccc" name="arrow" size="24" />
+          <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
       <div class="item van-hairline--bottom">
         <div class="left">
-          <img src="../../public/other_icon/user/help.png" >
+          <img src="../../public/other_icon/user/help.png">
           <span>帮助中心</span>
         </div>
         <div class="right">
-          <van-icon color="#cccccc" name="arrow" size="24" />
+          <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
       <div class="item van-hairline--bottom">
         <div class="left">
-          <img src="../../public/other_icon/user/set.png" >
+          <img src="../../public/other_icon/user/set.png">
           <span>设置</span>
         </div>
         <div class="right">
-          <van-icon color="#cccccc" name="arrow" size="24" />
+          <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
       <div class="item van-hairline--bottom" @click="loginOut">
         <div class="left">
-          <img src="../../public/other_icon/user/loginout.png" >
+          <img src="../../public/other_icon/user/loginout.png">
           <span>退出登录</span>
         </div>
         <div class="right">
@@ -86,118 +129,73 @@
         </div>
       </div>
     </div>
-    <footer >
 
-    </footer>
-    <van-popup v-model="show" position="bottom" round>
-      <van-cascader
-        v-model="cascaderValue"
-        :options="options"
-        :title="title"
-        @change="onChange"
-        @close="show = false"
-        @finish="onFinish"
-      />
-    </van-popup>
   </div>
 </template>
 
 <script>
 import {clear} from "@/utils/localStorage";
 import {Toast} from "vant";
+import {mapState} from "vuex";
+import {myChart} from "@/utils/echarts";
 
 export default {
   name: "User",
-  data(){
-    return{
-      show:false,
-      fieldValue: '',
-      cascaderValue: '',
-      title:'请选择年级',
-      // 选项列表，children 代表子选项，支持多级嵌套
-      options: [
-        {
-          text: '2019',
-          value: '111',
-          children: [{ text: '工商学院',value: '21'},{ text: '医学院',value: '22'},{ text: '商学院',value: '23'},],
-        },
-        {
-          text: '2020',
-          value: '122',
-          children: [{ text: '工商学院',value: '21'},{ text: '医学院',value: '22'},{ text: '商学院',value: '23'}],
-        },
-        {
-          text: '2021',
-          value: '312',
-          children: [{ text: '工商学院',value: '21'},{ text: '医学院',value: '22'},{ text: '商学院',value: '23'}],
-        }
-      ],
+  data() {
+    return {
+      pointD:null
     }
   },
+  computed: { ...mapState(["userData"]) },
   methods: {
-    loginOut(){
+    //退出
+    loginOut() {
       clear()
       const toast = Toast.loading({
         duration: 0,
-        forbidClick:true,
+        forbidClick: true,
         message: '成功退出!'
       })
       let second = 2;
       const timer = setInterval(() => {
         second--;
-        if (second===0) {
+        if (second === 0) {
           clearInterval(timer);
           // 手动清除 Toast
           Toast.clear();
           this.$router.replace({
-            path:'/login'
+            path: '/login'
           })
         }
       }, 1000);
     },
-    //提交学院绑定
-    onFinish({ selectedOptions }) {
-      this.show = false;
-      this.fieldValue = selectedOptions.map((option) => option.text).join('/');
-    },
-    //改变触发
-    onChange(value){
-      if(value.tabIndex == 0){
-        this.title = "请选择学院"
-      }else{
-        this.title = "请选择年级"
-
-      }
+    //查询每一块积分
+    async getPoint(){
+      let {data} = await this.$axios({
+        url:'/points/findById',
+        method:'post',
+        params:{
+          userId:this.userData.id
+        }
+      })
+      this.pointD = data.data[0]
     }
+  },
+  created() {
+    // console.log(this.userData);
+  },
+  async mounted() {
+    console.log (this.userData)
+    await this.getPoint()
+    myChart(document.getElementById("myEcharts"))
   }
 }
 </script>
 
 <style lang="less" scoped>
 #user {
-  //background-image: linear-gradient(to bottom, rgb(96, 217, 212), rgb(226, 245, 244));
-  //background-size: 100% 25vh;
-  //background-image: url("../../public/other_icon/user/bc.png");
-  //background-size: 95vw;
-  //background-repeat: no-repeat;
-  //background-position: 50% 100%;
-  padding: 15px 15px 40vh;
-  margin-bottom: 35px;
-  position: relative;
-  &::after{
-    background-image: url("../../public/other_icon/user/bc.png");
-    background-size: 95vw;
-    background-repeat: no-repeat;
-    background-position: center bottom 0;
-    content: "";
-    opacity: 0.5;
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    z-index: -1;
-  }
+  background-color: rgba(247, 248, 250);
+  padding: 15px 15px 10vh;
 
   .user-nh {
     display: flex;
@@ -218,81 +216,110 @@ export default {
       }
     }
   }
-  .info-block{
+
+  .info-block {
     display: flex;
     justify-content: space-between;
     padding: 0 15px;
-    .learn-num{
+
+    .learn-num {
       background-color: #eaf6f6;
-      background-image: url("../../public/other_icon/user/jifen.png") ;
+      background-image: url("../../public/other_icon/user/jifen.png");
       background-size: 45%;
       background-repeat: no-repeat;
       background-position: 110% 120%;
-      p:nth-child(3){
+
+      p:nth-child(3) {
         color: #3aebf1;
       }
     }
-    .integral{
+
+    .integral {
       background-color: rgb(237, 240, 255);
-      background-image: url("../../public/other_icon/user/shan.png") ;
+      background-image: url("../../public/other_icon/user/shan.png");
       background-size: 45%;
       background-repeat: no-repeat;
       background-position: 110% 110%;
 
-      p:nth-child(3){
+      p:nth-child(3) {
         color: rgb(173, 180, 248);
       }
     }
-    div{
+
+    div {
       width: 40vw;
       box-sizing: border-box;
       padding: 10px;
       border-radius: 15px;
-      p{
+
+      p {
         margin: 5px 0;
       }
-      p:nth-child(3){
+
+      p:nth-child(3) {
         font-size: 12px;
       }
-      p:nth-child(2){
+
+      p:nth-child(2) {
         font-size: 12px;
-        span{
+
+        span {
           font-size: 18px;
           font-weight: 600;
         }
       }
-      p:nth-child(1){
+
+      p:nth-child(1) {
         font-size: 16px;
       }
     }
   }
-  .list{
+
+  .list {
     margin-top: 20px;
-    .item{
+
+    .item {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 20px;
-      .left,.right{
+      padding: 20px 10px;
+
+      .left, .right {
         display: flex;
         align-items: center;
         font-size: 20px;
-        img{
+
+        img {
           width: 1.5rem;
           margin-right: 10px;
         }
       }
     }
   }
-  //footer{
-  //  width: 100%;
-  //  height: 38vh;
-  //  background-image: url("../../public/other_icon/user/bc.png");
-  //  background-size: cover;
-  //  margin-bottom: 12vh;
-  //}
 
+  .module-list {
+    background-color: white;
+    display: flex;
+    flex-wrap: wrap;
+    text-align: center;
+    margin: 20px 3.5vw;
+    padding: 20px 10px;
+    border-radius: 15px;
 
+    .item {
+      width: 25%;
+
+      img {
+        width: 10vw;
+        height: 10vw;
+      }
+
+      p {
+        font-size: 12px;
+        margin: 10px 0;
+      }
+    }
+  }
 
 }
 

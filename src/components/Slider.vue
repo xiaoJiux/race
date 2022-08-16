@@ -10,9 +10,9 @@
 
 <script>
 /* eslint-disable */
-import swipe1 from '../assets/tesImg/i.jpg'
-import swipe2 from '../assets/tesImg/o.jpg'
-import swipe3 from '../assets/tesImg/w.jpg'
+import swipe1 from '../assets/topSwiper/1.png'
+import swipe2 from '../assets/topSwiper/2.png'
+import swipe3 from '../assets/topSwiper/3.png'
 
 export default {
   name:'Slider',

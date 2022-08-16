@@ -12,42 +12,43 @@ import axios from 'axios'
 
 Vue.use(Vant);
 axios.defaults.baseURL = "http://www.wuhuazai.com"
+// axios.defaults.headers.common['Content-Type'] = 'application/json'
+if (localStorage.getItem('token') !== null) {
+  console.log('token is setting');
+  axios.defaults.headers.common['X-token'] = localStorage.getItem("token");
+}
+// 添加请求拦截器
+// axios.interceptors.request.use(function (config) {
+//   // 在发送请求之前做些什么
+//   return config;
+// }, function (error) {
+//   // 对请求错误做些什么
+//   return Promise.reject(error);
+// });
 
-// if(localStorage.getItem('token') !== null ){
-//
-// }
+// 添加响应拦截器
+// axios.interceptors.response.use(function (response) {
+//   // 2xx 范围内的状态码都会触发该函数。
+//   // 对响应数据做点什么
+//   return response;
+// }, function (error) {
+//   // 超出 2xx 范围的状态码都会触发该函数。
+//   // 对响应错误做点什么
+//   return Promise.reject(error);
+// });
 // 允许携带cookie
-axios.defaults.withCredentials = true
+// axios.defaults.withCredentials = true
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 
 
 //全局混入
 Vue.mixin({
-  data(){
+  data() {
     return {
       urlBase: process.env.NODE_ENV === "development" ? "http://localhost:3000" : ""
     }
   },
-  filters: {
-    fmtTime(value) {
-      let date = new Date(value),
-        YY = date.getFullYear(),
-        MM = date.getMonth() + 1,
-        DD = date.getDate(),
-        hh = date.getHours(),
-        mm = date.getMinutes(),
-        ss = date.getSeconds();
-
-      MM < 10 && (MM = "0" + MM)
-      DD < 10 && (DD = "0" + DD)
-      hh < 10 && (hh = "0" + hh)
-      mm < 10 && (mm = "0" + mm)
-      ss < 10 && (ss = "0" + ss)
-
-      return `${YY}-${MM}-${DD} ${hh}:${mm}:${ss}`
-    }
-  }
 })
 
 new Vue({

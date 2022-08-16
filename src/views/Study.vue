@@ -1,474 +1,297 @@
 <template>
-<div id="study">
-  <header>
-    <div class="t_header">
-      <p>Logo</p>
-      <span>安全学堂</span>
-      <img alt="" src="../../public/other_icon/search.png">
+  <div id="XT">
+    <header>
+      <div class="t_header">
+        安全学堂
+      </div>
+    </header>
+    <div class="din-d">
+      <div class="din-zi">
+        <span style="color: #6ec9b9; border-bottom:3px solid #6ec9b9;">主题</span>
+        <span @click="$router.push({
+        path: '/video'
+        })">视频</span>
+        <span>视觉探索</span>
+      </div>
+      <!--    搜索框on-->
+      <div class="search_header" @click="$router.push({
+      path: '/stydtvideo'
+      })">
+        <input placeholder="" style="background-color: transparent;border: none;width: 30vw; " type="text"/>
+        <van-icon color="rgb(96, 217, 212)" name="search" size="22" style="padding-right: 8px;"/>
+      </div>
+      <!--   搜索框end-->
     </div>
-  </header>
-  <div>
-    <van-image
-      fit="cover"
-      src="http://rekph2v9n.hn-bkt.clouddn.com/study_show.png"
-    />
-  </div>
-<!--  推荐-->
-  <div class="recommend">
-    <div class="title">
-      <img alt="" src="../../public/other_icon/study/commd.png" style="width: 22px;">
-      为您推荐
-    </div>
-    <div class="list-icon">
-      <div @click="$router.push({
-      path:'/case'
-      })">
-        <img alt="" src="../../public/other_icon/study/anli-5.png" style="width: 50px;">
-        <p>诈骗案例</p>
-      </div>
-      <div @click="$router.push({
-      path:'/story'
-      })">
-        <img alt="" src="../../public/other_icon/study/dingwei.png" style="width: 50px;">
-        <p>身边故事</p>
-      </div>
-      <div @click="$router.push({
-      path:'/news'
-      })">
-        <img alt="" src="../../public/other_icon/study/zixun.png" style="width: 50px;">
-        <p>资讯</p>
-      </div>
+    <!--轮播-->
+    <Slider/>
+    <div style="margin-top: -35px">
+      <van-tabs @change="change" v-model="active" animated color="rgb(96, 217, 212)">
+        <van-tab title="··推荐··">
+          <!--        1-->
+          <div v-for="(item,index) in recommendList" v-if="recommendList" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{ item.date.split (' ')[0] }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like" @click.stop :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
 
-    </div>
-  </div>
-<!--  身边故事-->
-  <div class="story">
-    <div class="top-title">
-      <span>身边故事</span>
-      <span class="s-more">查看更多&nbsp;<van-icon name="arrow" size="" /></span>
-    </div>
-    <div class="story-body">
-      <div class="user">
-        <van-image
-          :src="storyList[0].author.txUrl"
-          fit="cover"
-          height="55px"
-          round
-          width="55px"
-        />
-        <div class="u-t-n">
-          <p class="name">{{storyList[0].author.name}}</p>
-          <span class="o-time">{{storyList[0].author.sendTime}}</span>
-        </div>
-      </div>
-      <div class="u-report">
-        <img alt="" src="../../public/other_icon/study/miaozhun.png">
-        <span>举报对象:&nbsp;&nbsp;{{storyList[0].report}}</span>
-      </div>
-      <div class="s-content">
-        <article>
-          <router-link to>#资金欺诈行为#</router-link>
-          &nbsp;&nbsp;&nbsp;&nbsp;{{storyList[0].author.content}}
-        </article>
-      </div>
-      <div class="u-statement">
-        <div :class="useful===false?'':'change'" @click="isUseful">
-          <van-icon name="good-job-o" size="14" />
-          <span>1234有用</span>
-        </div>
-        <span class="shu">|</span>
-        <div :class="comfort===false?'':'change'">
-          <van-icon name="like-o" size="14" @click="isComfort"  />
-          <span>1234安慰</span>
-        </div>
-      </div>
-      <div class="s-num">
-        <img alt="" src="../../public/other_icon/study/xiaoxi.png">
-        <span class="p-num">已有{{storyNum}}人分享了自己的故事</span>
-        <van-icon name="arrow" />
-      </div>
-    </div>
-  </div>
-<!--最下部分,热榜,资讯-->
-  <div class="s-bottom">
-<!--    诈骗热榜-->
-    <div class="scarm-list">
-      <div class="scarm-list-header">
-        <span class="hot-font">诈骗热榜</span>
-        <span class="scarm-more">查看更多&nbsp;<van-icon name="arrow" /></span>
-      </div>
-      <div class="scarm-list-body">
-        <div v-for="item in hotList" :key="item.id" class="scarm-item">
-          <div :class="'top'+item.id" class="first">{{item.id}}</div>
-          <div class="main-content">
-            <p class="scarm-title">{{item.title}}</p>
-            <p>
-              <!--            来源-->
-              <span class="scarm-where">{{item.platform}}</span>
-              <!--            时间-->
-              <span class="scarm-time">{{item.sendTime}}</span>
-            </p>
+            </div>
           </div>
-          <van-image
-            :src="item.imgUrl"
-            fit="cover"
-            height="78px"
-            style="margin-right: 10px;border-radius: 15px;overflow: hidden"
-            width="116px"
-          />
-        </div>
-      </div>
-    </div>
-<!--    安全资讯-->
-    <div class="scarm-list">
-      <div class="scarm-list-header">
-        <span class="hot-font">安全资讯</span>
-      </div>
-      <div class="safe-list-body">
-        <div v-for="item in safeList" class="safe-item">
-          <div class="word-container">
-<!--            标题-->
-            <p class="safe-title">{{item.title}}</p>
-<!--            机构-->
-            <p class="platform">{{item.platform}}</p>
+        </van-tab>
+        <van-tab title="心里防线">
+          <div v-for="(item,index) in list" v-if="list" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{ item.date.split (' ')[0] }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like" @click.stop :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
+            </div>
           </div>
-          <van-image
-            :src="item.imgUrl"
-            fit="cover"
-            height="85px"
-            style="margin-right: 10px;border-radius: 15px;overflow: hidden"
-            width="128px"
-          />
-        </div>
-      </div>
+        </van-tab>
+        <van-tab title="信息安全">
+          <div v-for="(item,index) in list" v-if="list" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{ item.date.split (' ')[0] }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like" @click.stop :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
+            </div>
+          </div>
+
+        </van-tab>
+        <van-tab title="身边案例">
+          <div v-for="(item,index) in list" v-if="list" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{ item.date.split (' ')[0] }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like"  @click.stop :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
+            </div>
+          </div>
+
+        </van-tab>
+        <van-tab title="健康上网">
+          <div v-for="(item,index) in list" v-if="list" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{ item.date.split (' ')[0] }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like"  :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
+            </div>
+          </div>
+
+        </van-tab>
+      </van-tabs>
     </div>
   </div>
-</div>
 </template>
 
 <script>
+
+import Slider from "@/components/Slider";
+import HomePage from "@/components/home_page";
+import { Dialog } from "vant";
+import { joinNewLike } from "@/utils/joinNewLike";
+import { mapState } from "vuex";
+
 export default {
   name: "Study",
-  data(){
+  components: { HomePage, Slider },
+  data () {
     return {
-      useful:false,//是否有用,默认否
-      comfort:false,//是否安慰,默认否,
-      storyList: [//身边故事
-        {
-        author:{//发帖人信息
-          id:1,
-          name:'张三',
-          sendTime:'2022-02-02',
-          txUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',
-          content: '承诺收益、引诱开户入金。最典型的就是资金盘，一些不法人士会通过宣传自己的本事,编造一些历史高收益业绩来忽悠投资者投资,对外宣称保证盈利，100%盈利等口号，当他们聚拢足够多的资金时，就会携款私逃。',
-          //举报内容
-          sort:'资金欺诈行为',//分类(话题)
-        },
-        report:'1101*****12',//举报对象手机号
-        usefulNum:3454,//认为有用数目用户
-        comfortNum:34413,//表示安慰数目用户
-        }
-        ],
-      storyNum:1000,//故事数目,
-      hotList:[
-        {
-        id:1,
-        title:'以“非真实交易”界定网络交易型诈骗',//标题
-        platform:"腾讯管家",//平台
-        sendTime:'2020-01-01',//发送时间
-        imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg'//图片
-      },{
-        id:2,
-        title:'以“非真实交易”界定网络交易型诈骗',//标题
-        platform:"腾讯管家",//平台
-        sendTime:'2020-01-01',//发送时间
-        imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg'//图片
-      },{
-        id:3,
-        title:'以“非真实交易”界定网络交易型诈骗',//标题
-        platform:"腾讯管家",//平台
-        sendTime:'2020-01-01',//发送时间
-        imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg'//图片
-      }],//诈骗热榜
-      safeList:[
-        {
-          id:1,//id
-          platform:'宁波举报中心',//发帖机构,
-          title:'注意!这些消息千万别告诉别人!',//内容
-          imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
-          content:'内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',//内容
-        },{
-          id:2,//id
-          platform:'宁波举报中心',//发帖机构,
-          title:'注意!这些消息千万别告诉别人!',//内容
-          imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
-          content:'内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',//内容
-        },{
-          id:3,//id
-          platform:'宁波举报中心',//发帖机构,
-          title:'注意!这些消息千万别告诉别人!',//内容
-          imgUrl:'https://img01.yzcdn.cn/vant/cat.jpeg',//图片路径
-          content:'内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容内容',//内容
-        }
-      ]
+      active: 0,
+      recommendList: null,
+      list: null
     }
   },
+  computed:{...mapState(["userData"])},
   methods: {
-    isUseful(){
-      this.useful=!this.useful;
+    async getRecommendList () {
+      let { data } = await this.$axios ({
+        method: "get",
+        url: "/study/getAllUserOR"
+      })
+      this.recommendList = data.data
     },
-    isComfort(){
-      this.comfort=!this.comfort;
+    //change触发
+    change (name) {
+      this.list = this.recommendList.filter ((item) => {
+        if ( item.type === name ) {
+          return true
+        } else if ( name === 4 && item.type === 7 ) {
+          return true
+        }
+      })
+    },
+    async like(val){
+      console.log (val);
+      await joinNewLike(this.userData.id,val.id)
+      await this.getRecommendList()
     }
-  }
+  },
+  async created () {
+    await this.getRecommendList ()
+  },
 }
 </script>
 
 <style lang="less" scoped>
-#study{
-  padding-bottom: 10vh;
-  header {
-    background-color: rgb(96, 217, 212);
-    padding: 10px 0;
-    .t_header {
-      box-sizing: border-box;
-      padding: 0 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      text-align: center;
-      font-size: 18px;
-      color: rgb(238, 251, 250);
-      max-height: 6vh;
+#XT {
+  position: relative;
+}
 
-      span {
-        padding-right: 20px;
-        font-weight: 600;
-      }
+header {
+  background-color: #fff;
+  padding: 10px 0;
+}
 
-      img {
-        width: 1.5rem;
-        height: 1.5rem;
-      }
-    }
-  }
-  .recommend{
-    padding: 15px;
-    .title{
-      display: flex;
-      align-items: center;
-      font-size: 18px;
-      font-weight: bolder;
-      margin-bottom: 20px;
-      img{
-        margin-right: 10px;
-      }
-    }
-    .list-icon{
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-      p{
-        text-align: center;
-        margin: 0;
-      }
-    }
-  }
-  .story{
-    margin: 15px;
-    .top-title{
-      border-left: 4px solid rgb(0,117,106);
-      box-sizing: border-box;
-      padding-left: 5px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 20px;
-      .s-more{
-        font-size: 14px;
-      }
-    }
-    .story-body{
-      padding: 15px 5px;
-      .user{
-        display: flex;
-        align-items: center;
-        .u-t-n{
-          padding-left: 15px;
-          p{
-            margin: 0;
-          }
-          .name{
-            font-size: 15px;
-            margin-bottom: 8px;
-          }
-          .o-time{
-            font-size: 12px;
-            color: #8a8181;
-          }
-        }
-      }
-      .u-report{
-        display: inline-flex;
-        align-items: center;
-        border: 1px solid #cccccc;
-        margin-top: 10px;
-        padding: 2px 10px 2px 5px;
-        img{
-          width: 20px;
-          height: 20px;
+:deep(.van-tabs__content) {
+  margin-bottom: 70px;
+}
 
-        }
-        span{
-          font-size: 14px;
-          color: #cccccc;
-          padding-left: 10px;
-        }
-      }
-      .s-content{
-        margin: 15px 0;
-        article{
-          a{
-            font-size: 18px;
-            color: rgb(0,218,197);
-          }
-          font-size: 14px;
-          color: #868282;
-          letter-spacing: 2px;
-          line-height: 24px;
-        }
-      }
-      .u-statement{
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-        .shu{
-          padding: 0 6px;
-          font-size: 16px;
-          color: #868282;
-        }
-        div{
-          font-size: 12px;
-          color: #868282;
-        }
-        .change{
-          color: rgb(0,218,197);
-        }
-      }
-    }
-    .s-num{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      background-color: rgb(231,249,248);
-      padding: 10px 15px;
-      margin-top: 10px;
-      img{
-        width: 50px;
-        height: 50px;
-      }
-      span{
-        font-size: 12px;
-      }
-    }
+.t_header {
+  text-align: center;
+  font-size: 18px;
+  color: rgb(96, 217, 212);
+  line-height: 32px;
+  font-weight: 600;
+}
 
-  }
-  .s-bottom{
-    background-color: rgb(246,246,246);
-    padding: 15px;
-  }
-  .scarm-list{
-    background-color: #ffffff;
-    border-radius: 15px;
-    .scarm-list-header{
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px 10px;
-      .hot-font{
-        font-size: 18px;
-        border-left: 4px solid rgb(0,218,197);
-        padding-left: 5px;
-      }
-      .scarm-more{
-        font-size: 12px;
-        color: #cccccc;
-      }
 
-    }
-    .scarm-list-body{
-      margin-top: 20px;
-      margin-left: 5px;
-      .scarm-item{
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        margin-bottom: 15px;
-        .first{
-          width: 36px;
-          height: 36px;
-          border-radius: 100%;
-          text-align: center;
-          line-height: 36px;
-          font-size: 26px;
-          color: white;
-          margin-right: 5px;
-          &.top1{
-            background-color: rgb(255,92,92);
-          }
-          &.top2{
-            background-color: rgb(255,139,105);
-          }
-          &.top3{
-            background-color: rgb(255,170,105);
-          }
-        }
-        .main-content{
-          max-width: 45%;
-          .scarm-title{
-            font-size: 13px;
-          }
-          .scarm-where,.scarm-time{
-            font-size: 12px;
-            color: #7c7979;
-          }
-          .scarm-time{
-            float: right;
-            margin-right: 5px;
-          }
+.din-d {
+  padding-left: 20px;
+  padding-right: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-        }
-      }
+.din-zi {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
 
-    }
-    .safe-list-body{
-      padding: 0 10px;
-
-      .safe-item{
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        border-bottom: .5px solid silver;
-        padding-bottom: 10px;
-        padding-top: 10px;
-        box-sizing: border-box;
-        .word-container{
-          max-width: 60vw;
-          display: flex;
-          flex-direction: column;
-          span{
-            margin: 0;
-          }
-          .safe-title{
-            font-size: 14px;
-          }
-          .platform{
-            font-size: 12px;
-          }
-        }
-      }
-    }
+  span:nth-child(2) {
+    margin: 0 10px;
   }
 
 }
+
+.search_header {
+  width: 40vw;
+  background-color: #eaeaea;
+  margin: 0;
+  font-size: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  max-width: 100vw;
+  border-radius: 6px;
+
+}
+
+.search_header input {
+  max-width: 60vw;
+  /* flex-grow: 1; */
+}
+
+.kuan {
+  margin: 20px 15px 0px 15px;
+  padding: 10px 10px 15px 40px;
+  background-color: rgba(96, 217, 212, 0.3);
+  //height: 200px;
+  .kuan-1 {
+    padding-top: 15px;
+    background: linear-gradient(to left, #12bbd1, #00cfc2, #1ad5b7);
+  }
+
+  .kuan-nei {
+    width: 105%;
+    margin: 0px 0px -75px -27px;
+    font-size: 14px;
+    color: #a8a4a4;
+    background-color: white;
+
+    img {
+      width: 100%;
+      height: 80%;
+    }
+
+    .vv {
+      padding: 8px 10px;
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      background-color: white
+    }
+  }
+}
+
 </style>
