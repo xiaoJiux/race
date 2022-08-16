@@ -5,14 +5,10 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-
+    userData: JSON.parse(localStorage.getItem('userData')),
   },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+  getters: {},
+  mutations: {},
+  actions: {},
+  modules: {}
 })

@@ -38,25 +38,21 @@ const routes = [
       showTabBar: true
     }
   },
+  //贴子列表
   {
-    path: '/shareTips',
-    name: 'shareTips',
-    component: () => import('@/views/ShareTips')
+    path: '/ExperienceList',
+    name: 'ExperienceList',
+    component: () => import('@/views/community/Experience/ExperienceList'),
   },
+  //贴子详情
   {
     path: '/article',
     name: 'article',
-    component: () => import('@/views/community/Article'),
+    component: () => import('@/views/community/ArticleDetails'),
     meta: {
       title: '贴子'
     }
 
-  },
-  //贴子详情
-  {
-    path: '/article/:id',
-    name: 'postPage',
-    component: () => import('@/components/activity/PostPage')
   },
   {
     path: '/activity',
@@ -65,6 +61,39 @@ const routes = [
     meta: {
       title: '反诈行动'
     }
+  },
+  //活动详情
+  {
+    path: '/activity/:id',
+    name: 'ActivityDetails',
+    component: () => import('@/views/community/ActivityDetails'),
+    meta: {
+      title: '活动详情'
+    }
+  },
+  //已报名活动页面路由
+  {
+    path: '/enterActivity',
+    name: 'enterActivity',
+    component: () => import('@/views/community/EnterActivity'),
+    meta: {
+      title: '我的活动'
+    }
+  },
+  //已签到页面路由
+  {
+    path: '/signActivity',
+    name: 'signActivity',
+    component: () => import('@/views/community/SignActivity'),
+    meta: {
+      title: '已签到活动'
+    }
+  },
+  //我的心得路由
+  {
+    path: '/MyExperience',
+    name: 'MyExperience',
+    component: () => import('@/views/user/experience/MyExperience')
   },
   {
     path: '/signIn',
@@ -84,44 +113,6 @@ const routes = [
     path: '/Chatroom',
     name: 'chatroom',
     component: () => import('@/views/community/Chatroom')
-  },
-  //举报分享
-  {
-    path: '/shareReport',
-    name: 'shareReport',
-    component: () => import('@/views/community/ShareReport'),
-    meta: {
-      title: '举报分享'
-    }
-  },
-  // 反诈案例
-  {
-    path: '/case',
-    name: 'case',
-    component: () => import('@/views/study/Anti-fraud-case')
-  },
-  {
-    path: '/case/:id',
-    name: 'caseDetail',
-    component: () => import('@/views/study/CaseDetail')
-  },
-  //身边故事
-  {
-    path: '/story',
-    name: 'story',
-    component: () => import('@/views/study/Story'),
-    meta: {
-      title: '身边故事'
-    }
-  },
-  //资讯
-  {
-    path: '/news',
-    name: 'news',
-    component: () => import('@/views/study/News'),
-    meta: {
-      title: '资讯'
-    }
   },
   {
     path: '/login',
@@ -156,9 +147,49 @@ const routes = [
     path: '/video',
     name: 'video',
     component: () => import('@/views/home/Video')
+  },
+  //写贴子
+  {
+    path: '/writeArticle',
+    name: 'WriteArticle',
+    component: () => import('@/views/community/WriteArticle')
+  },
+  {
+    path: '/issuanceActivity',
+    name: 'IssuanceActivity',
+    component: () => import('@/views/user/IssuanceActivity'),
+    meta: {
+      title: '发布活动'
+    }
+  },
+  //活动审核
+  {
+    path: '/audit',
+    name: 'Audit',
+    component: () => import('@/views/community/Audit'),
+    meta: {
+      title: '活动审核'
+    }
+  },
+  //活动审核详情页
+  {
+    path: '/audit/detail',
+    name: 'AuditDetails',
+    component: () => import('@/views/community/AuditDetails'),
+    meta: {
+      title: '审核'
+    }
+  },
+  {
+    path: '/stydtvideo',
+    name: 'Stydtvideo',
+    component: () => import('@/views/study/Stydtvideo'),
+  },
+  {
+    path: '/newDetails',
+    name: 'NewDetails',
+    component: () => import('@/views/study/NewsDeatils'),
   }
-
-
 ]
 
 const router = new VueRouter({

@@ -1,147 +1,138 @@
 <template>
   <div class="activity">
-    <div class="signIn" @click="$router.push({
-        path:'/signIn'
-    })">
-      <img alt="" class="signIn" src="../../../public/other_icon/signIn.png">
-      <p>签到</p>
-    </div>
+
     <Header :title="$route.meta.title"></Header>
-    <van-tabs v-model="active" animated background="rgba(224,237,250)"
-              color="#ffffff" line-height="1px" line-width="50px" offset-top="1.6rem + 18px" shrink="true"
-              sticky swipeable>
-      <van-tab v-for="(item,index) in list" :key="index" :title="item.state">
-        <div class="card_list"
-             style="display: flex;justify-content:space-around;flex-wrap: wrap;box-sizing: border-box;padding: 25px 0">
-          <div v-for="(item,idx) in item.activityList" :key="idx" class="item_card"
-               style="border-radius: 0 0 10px 10px;overflow: hidden;box-shadow: 2px 2px 2px gainsboro;margin-bottom: 35px"
-               @click="passData(item)">
-            <van-image
-              :src="item.img"
-              fit="cover"
-              height="40vw"
-              width="45vw"
-            />
-            <div style="padding-left: 5vw">
-              <p style="margin: 1vh 0">{{ item.name }}</p>
-              <p style="margin: 0;font-size: 12px">人数：&nbsp;{{ item.regNum }}/{{ item.number }}</p>
-              <p style="margin: 0;font-size: 12px">时间：&nbsp;{{ item.end }}</p>
-            </div>
-            <div style="width: 33.3%;border: 2px solid rgb(110,228,213);margin: 1rem auto;border-radius: 20px"></div>
-          </div>
+    <van-dropdown-menu active-color="#1989fa">
+      <van-dropdown-item v-model="value" :options="option" @change="sortSelect"/>
+      <van-dropdown-item ref="item" title="活动区域">
+        <van-cell center title="校内">
+          <template #right-icon>
+            <van-switch v-model="switch1" active-color="#5690ff" size="24"/>
+          </template>
+        </van-cell>
+        <van-cell center title="校外">
+          <template #right-icon>
+            <van-switch v-model="switch2" active-color="#5690ff" size="24"/>
+          </template>
+        </van-cell>
+        <div style="padding: 5px 16px;">
+          <van-button block round type="info" @click="onConfirm">
+            确认
+          </van-button>
         </div>
-      </van-tab>
-    </van-tabs>
-    <van-popup v-model="show" style="border-radius: 25px" @click="show = false">
-      <div class="wrapper">
-        <Activity_card :data="passCdata"/>
+      </van-dropdown-item>
+    </van-dropdown-menu>
+    <div class="content-list">
+      <div v-for="(item,index) in list" :key="index" class="van-hairline--bottom item" @click="$router.push({
+      name:'ActivityDetails',
+      params: {
+        id:item.id,
+        item
+      }
+      })">
+        <van-image
+          :src="item.img"
+          fit="cover"
+          height="25vh"
+          width="88vw"
+        />
+        <p class="title" style="border-left: 6px solid rgb(3,204,198);padding-left: 3px">{{ item.name }}</p>
+        <p style="font-size: 10px;color: #cccccc">
+          <span style="margin-right: 12vw;padding-left: 9px">地区 ：{{ item.location.split('区')[0] + '区' }}</span>
+          <span>人数 ：{{ item.nowNum }}/{{ item.needNum }}人</span>
+        </p>
       </div>
-    </van-popup>
+    </div>
+    <!--    <van-popup v-model="show" style="border-radius: 25px" @click="show = false">-->
+    <!--      <div class="wrapper">-->
+    <!--        <Activity_card :data="passCdata"/>-->
+    <!--      </div>-->
+    <!--    </van-popup>-->
   </div>
 </template>
 
 <script>
 import Header from "@/components/Header";
-import Activity_card from "@/components/activity/Activity_card";
+import {Toast} from "vant";
 
 export default {
   name: "Activity",
-  components: {Header, Activity_card},
+  components: {Header},
   data() {
     return {
-      show: false,
+      value: 0,
+      switch1: false,
+      switch2: false,
       active: 0,
       passCdata: {},//传递到卡片的数据
+      option: [
+        {text: '报名中', value: 0},
+        {text: '未开始', value: 1},
+        {text: '已结束', value: 2},
+      ],
       list: [
-        {
-          state: '报名中',
-          activityList: [
-            // {
-            //   id: 1,
-            //   name: '活动标题',
-            //   start: '1997.7.1',
-            //   end: '2222.2.2',
-            //   college: '嘻嘻哈哈大学',
-            //   initiator: '张三',
-            //   regNum: 5,
-            //   number: 10,
-            //   location: '富阳区商业城(公交站)',
-            //   poster: 'http://rekph2v9n.hn-bkt.clouddn.com/4.jpg',
-            //   content: '阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴'
-            // }, {
-            //   id: 1,
-            //   name: '活动标题',
-            //   start: '1997.7.1',
-            //   end: '2222.2.2',
-            //   college: '嘻嘻哈哈大学',
-            //   initiator: '张三',
-            //   regNum: 5,
-            //   number: 10,
-            //   location: '富阳区商业城(公交站)',
-            //   poster: 'http://rekph2v9n.hn-bkt.clouddn.com/4.jpg',
-            //   content: '阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴'
-            // }
-          ]
-        },
-        {
-          state: '进行中',
-          activityList: []
-        }, {
-          state: '已结束',
-          activityList: []
-        }
+        //   {
+        //   list:[{//参加活动的的用户
+        //     id:1,
+        //     img:'',//头像
+        //     name:'',
+        //   }],//参加活动的人
+        //   id:1,//活动id
+        //   nowNum:5,//已经参加人数
+        //   needNum:10,//最大人数
+        //   name:'个人成长图书会',//活动名称
+        //   img:'https://img01.yzcdn.cn/vant/cat.jpeg',//现场图片
+        //   phone:'18858444327',//主办人手机号
+        //   time:'2020.08.16 ',//报名开始时间
+        //   overTime:'2020.08.17',//报名结束时间
+        //   userName:'张三',
+        //   unit:"服务小分队",//举办单位
+        //   //活动详情
+        //   content: "通过 round 属性可以设置图片变圆，注意当图片宽高不相等且 fit 为 contain 或 scale-down 时，将无法填充一个完整的圆形。",
+        //   start:'2022-09-01 13:30:00',//活动开始时间
+        //   end:'2022-09-01 16:30:00',//活动结束时间
+        //   location:'宁波市镇海区庄市街道街道核酸采样综合服务点',//地址
+        //   claim:'当天下午提前半小时到达',//志愿者要求
+        // }
       ]
     }
   },
   methods: {
-    //传数据到Activity_card中
-    passData(data) {
-      this.show = true
-      this.passCdata = data
+    sortSelect(value) {
+      console.log(value);
     },
-    // 查询已报名人数
-    async selectNum(item){
-      let {data} = await this.$axios({
-        url:'/join/findActivityCOUNT',
-        method: 'POST',
-        params: {
-          activityId:item.id
-        }
-      })
-      return  item.regNum = data
-
+    onConfirm() {
+      this.$refs.item.toggle();
     },
-    // 根据时间分类
-    async selectActivity(data){
-      const now = new Date().getTime()
-      await data.forEach( (item) => {
-        const startTime = new Date(item.start)
-        this.selectNum(item)
-        if (startTime < now) {
-          this.list[0].activityList.push(item)
-        } else if (item.end < now) {
-          this.list[2].activityList.push(item)
-        } else {
-          this.list[1].activityList.push(item)
-        }
-      })
-    }
   },
   //请求活动数据
   async mounted() {
     let {data} = await this.$axios({
-      methods: 'get',
+      methods: 'GET',
       url: '/activity/getAllUser'
     })
-    // console.log(data);
-
-    await this.selectActivity(data)
+    console.log(data);
+    if (data.code === 20000) {
+      this.list = data.data
+    } else {
+      Toast.fail('对不起,系统出错了!!!')
+    }
   }
 }
+
 </script>
 
 <style lang="less" scoped>
 .activity {
+  :deep(.van-dropdown-menu__title::after) {
+    border-color: transparent transparent rgb(1, 202, 205) rgb(1, 202, 205);
+  }
+
+  :deep(.van-image) {
+    border-radius: 15px;
+    overflow: hidden;
+  }
+
   .signIn {
     position: fixed;
     //right: 4vw;
@@ -166,5 +157,17 @@ export default {
     }
   }
 
+  .content-list {
+    padding: 25px 6vw;
+
+    .item {
+      margin: 0 auto;
+      padding-bottom: 15px;
+
+      .title {
+        font-size: 14px;
+      }
+    }
+  }
 }
 </style>

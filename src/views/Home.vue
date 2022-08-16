@@ -8,27 +8,42 @@
           <van-icon dot name="envelop-o"/>
         </div>
       </div>
-      <div class="h-body">
-        <div class="left">
-          <p class="zc-title">入反诈专场</p>
-          <p class="zc-learn">学反诈知识
-            <span class="zc-coll">合集</span>
-          </p>
-          <p class="zc-aim">明理</p>
+      <div class="big-btn">
+        <div class="item">
+          <div class="">
+            <p class="title">今日推荐</p>
+            <p class="introduce">每天都有新资讯</p>
+          </div>
+          <van-image
+            style="margin-right: 8px"
+            width="25%"
+            height="80%"
+            fit="cover"
+            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          />
         </div>
-        <div class="right" style="transform: rotate(15deg);padding-right: 15px">
-          <img src="../../public/home/R-C.jpg" style="width: 28vw;border-radius: 15px;opacity: .7;">
+        <div class="item">
+          <div class="">
+            <p class="title">数据观天下</p>
+            <p class="introduce">让诈骗更直观</p>
+          </div>
+          <van-image
+            style="margin-right: 8px"
+            width="25%"
+            height="80%"
+            fit="cover"
+            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          />
         </div>
       </div>
-      <div class="search_header">
-        <van-icon name="search" size="22"/>
-        <input placeholder="Search" style="background-color: transparent;border: none" type="text"/>
-        <van-icon name="scan" size="22"/>
-      </div>
-    </header>
-    <div class="body">
       <!--      四小块-->
       <div class="btn-list">
+        <div class="btn-item">
+          <img src="../../public/home/qrcode.png" @click="$router.push({
+        path: '/activity'
+        })">
+          <p>反诈行动</p>
+        </div>
         <div class="btn-item" @click="$router.push({
         path: '/QR-code'
         })">
@@ -39,15 +54,18 @@
           <img src="../../public/home/qrcode.png">
           <p>电子书</p>
         </div>
-        <div class="btn-item" @click="$router.push({path:'/bookshelf'})">
+        <div class="btn-item" @click="$router.push({path:'/'})">
           <img src="../../public/home/qrcode.png">
-          <p>VR参观</p>
+          <p>热门资讯</p>
         </div>
         <div class="btn-item">
           <img src="../../public/home/qrcode.png">
           <p>反骗码</p>
         </div>
       </div>
+    </header>
+    <div class="body">
+
     </div>
     <div class="live-team">
       <div class="live-team-title">
@@ -100,156 +118,88 @@ export default {
 #home {
   position: relative;
   height: 100vh;
-
+  background-color: rgba(247,248,250);
   header {
-    //height: 35vh;
-    //background-color: rgb(164, 232, 230);
-    background-image: linear-gradient(rgb(123, 229, 225), rgb(164, 232, 230));
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center bottom 0;
-    border-bottom-left-radius: 60px;
-    padding-bottom: 20px;
-
+    background-image: linear-gradient(20deg, white 35%,  rgba(199,210,249,.8) 72%, rgba(231,235,251));
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+    padding-bottom: 15px;
     .top {
       display: flex;
       justify-content: space-between;
       align-items: center;
       font-size: 26px;
       padding: 10px 15px;
-      color: white;
+      color: black;
       font-weight: 600;
 
       .van-icon {
         padding-left: 15px;
       }
     }
-
-    .h-body {
-      padding: 0 20px;
+    .big-btn{
       display: flex;
-      justify-content: space-between;
-
-      p {
-        margin: 5px 0;
-        //color: black;
-        letter-spacing: 0.2rem;
-        font-size: 1.5rem;
-        background-image: -webkit-linear-gradient(left, #147B96, #E6D205 25%, #147B96 50%, #E6D205 75%, #147B96);
-        -webkit-text-fill-color: transparent;
-        -webkit-background-clip: text;
-        -webkit-background-size: 200% 100%;
-        -webkit-animation: maskedAnimation 4s infinite linear;
-
-      }
-
-      @keyframes maskedAnimation {
-        0% {
-          background-position: 0 0;
+      justify-content: space-around;
+      padding: 15px;
+      .item{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        background-color: white;
+        padding: 5px 0;
+        border-radius: 18px;
+        &:nth-child(1){
+          margin-right: 10px;
         }
-
-        100% {
-          background-position: -100% 0;
+        p{
+          margin: 10px;
         }
-      }
-
-      .zc-title {
-        font-size: 14px;
-      }
-
-      .zc-learn {
-        font-size: 28px;
-        font-weight: 600;
-        padding: 10px 0;
-
-        .zc-coll {
-          display: block;
+        .title {
+          font-size: 16px;
+          font-weight: 600;
+        }
+        .introduce{
+          font-size: 10px;
         }
       }
-
-      .zc-aim {
-        font-size: 14px;
-      }
     }
-
-    &::after {
-      background-color: #efefef;
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: -1;
-    }
-
-    .search_header {
-      background-color: white;
-      margin: 20px;
-      padding: 10px;
-      font-size: 16px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-sizing: border-box;
-      max-width: 100vw;
-      border-radius: 12px;
-
-      input {
-        padding-left: 10px;
-        max-width: 60vw;
-        //flex-grow: 1;
-      }
-    }
-  }
-
-  .body {
-    position: relative;
-    border-top-right-radius: 60px;
-    background-color: #efefef;
-
-    &::after {
-      //background-color: rgb(119,224,220);
-      background-image: linear-gradient(rgb(164, 232, 230), rgb(179, 236, 234));
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      bottom: 0;
-      right: 0;
-      z-index: -1;
-    }
-
     .btn-list {
       display: flex;
       justify-content: space-around;
       align-items: center;
-      padding: 20px 15px;
+      padding: 0 15px 20px;
 
       .btn-item {
-        width: 22%;
-        margin: 0 6px;
+        width: 20%;
         text-align: center;
-        background-color: white;
         padding: 10px 8px;
         box-sizing: border-box;
         border-radius: 15px;
 
         p {
           margin: 0;
-          font-size: 12px;
+          font-size: 10px;
+          text-align: center;
         }
 
         img {
-          width: 12vw;
+          background-color: white;
+          padding: 6px;
+          width: 10vw;
+          border-radius: 20px;
         }
       }
     }
+
+  }
+
+  .body {
+    position: relative;
+
   }
 
   .live-team {
-    padding: 5px 20px;
-
+    padding: 5vh 20px;
 
     .live-team-title {
       display: flex;
