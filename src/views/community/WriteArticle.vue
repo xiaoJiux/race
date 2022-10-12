@@ -16,7 +16,7 @@
           show-word-limit
           type="textarea"
         />
-        <van-uploader v-model="fileList" :after-read="afterRead" multiple/>
+        <van-uploader v-model="uploader" :after-read="afterRead" multiple/>
 
       </van-form>
 
@@ -26,23 +26,64 @@
 </template>
 
 <script>
+import { Toast } from "vant";
+import { mapState } from "vuex";
+
 export default {
   name: "WriteArticle",
   data() {
     return {
       fileList: [],
       message: "",
-      formData: new FormData()
+      uploader: [],
+      img:null,
     };
   },
+  computed: {...mapState(["userData"])},
   methods: {
     //内容提交
-    onSubmit(values) {
+    async onSubmit(value) {
 
+      try {
+        if(this.img){
+          let obj = {
+            name:value.message,
+            user:this.userData.id,
+            img:this.img,
+            opacity:2,
+            content:value.message,
+            level:2
+          }
+
+          let {data} = await this.$axios({
+            url:'/posting/save',
+            method:'post',
+            data:obj
+          })
+          if(data.code === 0){
+            await this.$router.replace ({
+              path: '/'
+            })
+          }
+        }
+      } catch (e) {
+        console.log(e);
+        Toast.fail('对不起,出错啦!')
+      }
     },
-    afterRead(file) {
-      this.formData.append(file.file.name, file.file);
-      console.log(this.formData);
+    async afterRead(file){
+      file = file.file
+      let {data} = await this.$axios({
+        url:'/files/upload',
+        method:'post',
+        headers:{
+          'Content-Type':'multipart/form-data'
+        },
+        data:{
+          file
+        }
+      })
+      this.img = data.data
     },
     sendMsg() {
       this.$refs.submit.submit()

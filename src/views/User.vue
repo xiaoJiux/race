@@ -10,7 +10,7 @@
           fit="cover"
           height="75px"
           round
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          :src="userData.img"
           width="75px"
         />
       </div>
@@ -23,7 +23,9 @@
         <p style="font-size: 14px">签到</p>
       </div>
       <!--      积分-->
-      <div class="integral">
+      <div class="integral" @click="$router.push({
+      path:'/point'
+      })">
         <p>学习积分</p>
         <p><span>{{pointD?pointD.sumNumber:0}}</span></p>
         <p>积分可进行兑换</p>
@@ -55,7 +57,9 @@
         <img alt="" src="../assets/user/2.png">
         <p>我的评论</p>
       </div>
-      <div class="item">
+      <div class="item"  @click="$router.push({
+      path: '/myCollect'
+      })">
         <img alt="" src="../assets/user/3.png">
         <p>我的收藏</p>
       </div>
@@ -77,7 +81,9 @@
         <img alt="" src="../assets/user/6.png">
         <p>活动审核</p>
       </div>
-      <div class="item">
+      <div class="item" @click="$router.push({
+      path:'/exchange'
+      })">
         <img alt="" src="../assets/user/7.png">
         <p>积分兑换</p>
       </div>
@@ -181,13 +187,10 @@ export default {
       this.pointD = data.data[0]
     }
   },
-  created() {
-    // console.log(this.userData);
-  },
   async mounted() {
     console.log (this.userData)
     await this.getPoint()
-    myChart(document.getElementById("myEcharts"))
+    myChart(document.getElementById("myEcharts"),[this.pointD.type1,this.pointD.type3,this.pointD.type6,this.pointD.type2,this.pointD.type1,])
   }
 }
 </script>

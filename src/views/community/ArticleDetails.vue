@@ -7,7 +7,7 @@
         <div class="select-item">详情</div>
       </div>
     </header>
-    <div class="list">
+    <div class="list" v-if="artData">
       <div class="van-hairline--bottom art-item">
         <div class="box-header">
           <div class="left">
@@ -40,7 +40,7 @@
               <span> </span>
             </li>
             <li @click="clickGood()">
-              <van-icon color="rgba(176,176,176)" name="good-job" size="18"/>
+              <van-icon :color="color?'rgba(0,245,225)':'rgba(176,176,176)'" name="good-job" size="18"/>
               <span>{{artData.likeCOUNT}}</span>
             </li>
 
@@ -57,6 +57,8 @@
 <script>
 
 import Commentarea from "@/components/CommentArea";
+import { mapState } from "vuex";
+import { clickGood } from "@/utils/articleLike";
 
 export default {
   name: "Articles",
@@ -64,12 +66,14 @@ export default {
   data() {
     return {
       artData: null,
-      aID:null
+      aID:null,
+      color:false
     }
   },
   async mounted() {
     await this.getArticle()
   },
+  computed:{...mapState(['userData'])},
   methods: {
     async getArticle() {
       let {data} = await this.$axios({
@@ -81,6 +85,11 @@ export default {
       })
       this.artData = data.data[0]
       console.log (this.artData);
+    },
+    async clickGood(){
+     await clickGood(this.userData.id,this.aID)
+      await this.getArticle()
+      this.color = true
     }
   },
   created () {

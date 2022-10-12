@@ -172,16 +172,6 @@ export default {
       this.hotList = []
       this.hotList.push(data.data[0])
     },
-    //change触发
-    change (name) {
-      this.list = this.hotList.filter ((item) => {
-        if ( item.type === name ) {
-          return true
-        } else if ( name === 4 && item.type === 7 ) {
-          return true
-        }
-      })
-    },
     async like(val){
       await joinHotLike(this.userData.id,val.id,1)
       await this.getRecommendList()

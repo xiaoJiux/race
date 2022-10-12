@@ -84,8 +84,8 @@
       </div>
     </div>
     <div class="bottom" >
-      <van-button v-if="" block type="primary" @click="join">我要报名</van-button>
-      <van-button block type="primary" @click="singIn">签到</van-button>
+      <van-button v-if="" block type="primary" @click="joinIT" :disabled="join">我要报名</van-button>
+      <van-button block type="primary" @click="singIn" :disabled="sign">签到</van-button>
     </div>
   </div>
 </template>
@@ -105,7 +105,9 @@ export default {
       //定义终点位置
       EndXY: {},
       data: null,
-      aId:null
+      aId:null,
+      join:false,
+      sign:false
     }
   },
   computed: {
@@ -118,12 +120,11 @@ export default {
     },
     handlClick() {
       /* Start  判断手机是IOS还是安卓 */
-
       let queryStr = `?sourceApplication=msite&lat=${this.EndXY.lat}&lon=${this.EndXY.lng}&dev=1&style=2`
       window.location.href = `androidamap://navi${queryStr}`;
     },
     //报名活动
-    async join() {
+    async joinIT() {
       let {data} = await this.$axios({
         method: 'POST',
         url: '/join/save',
@@ -133,13 +134,27 @@ export default {
         },
       })
       if (data.code === 0) {
+        this.join = true
         Toast.success("报名成功")
-
       }
     },
     //签到
-    singIn() {
-
+    async singIn() {
+      let {data} = await this.$axios({
+        method: 'POST',
+        url: '/sign/save',
+        data: {
+          user: this.userData.id,
+          activity: this.data.id,
+          type:2,
+          date:fmtTime(),
+          location:'本部'
+        },
+      })
+      if (data.code === 0) {
+        this.sign = true
+        Toast.success("签到成功")
+      }
     },
     //查询活动
     async getActivity(){

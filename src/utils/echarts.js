@@ -1,6 +1,6 @@
 import * as echarts from 'echarts';
 
-export function myChart(domRef) {
+export function myChart(domRef,value) {
   let chart = echarts.init(domRef)
   chart.setOption({
     radar: [
@@ -26,7 +26,7 @@ export function myChart(domRef) {
         color: [ "#00C5CF"],
         data: [
           {
-            value: [60, 60, 60, 60, 60],
+            value: value,
             name: 'Another Phone'
           }
         ]

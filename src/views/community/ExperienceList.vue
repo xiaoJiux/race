@@ -3,48 +3,45 @@
     <header>
       <p>心得体会</p>
       <div class="select">
-        <img src="../../../../public/other_icon/back-icon.png" @click="$router.back()">
-        <div :class="active===1?'active-item':''" class="select-item" @click="active=1"><i/><i/>推荐<i/><i/></div>
-        <div :class="active===2?'active-item':''" class="select-item" @click="active=2"><i/><i/>最新<i/><i/></div>
-        <div :class="active===3?'active-item':''" class="select-item" @click="active=3"><i/><i/>热门<i/><i/></div>
+        <img src="../../../public/other_icon/back-icon.png" @click="$router.back()">
       </div>
     </header>
     <div class="article">
-      <div v-for="item in 2" class="art-item" @click="$router.push({
+      <div v-for="item in data" class="art-item" @click="$router.push({
         path: '/article',
-        params: {
-
+        query: {
+          id:item.id
         }
       })">
         <van-image
           fit="cover"
           height="50px"
           round
-          src="https://img01.yzcdn.cn/vant/cat.jpeg"
+          :src="item.userImg"
           style="position: absolute;top: -20px;left: 25px;padding: 5px;border-radius: 50%;background-color: rgba(202,244,243)"
           width="50px"
         />
-        <p class="name">花鸟市场</p>
+        <p class="name">{{item.userName}}</p>
         <div class="card">
           <van-image
             fit="cover"
             height="200px"
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+            :src="item.img"
             width="100%"
           />
           <div class="box-bottom">
             <article>
-              太美艾克酸苦罗斯福号收款方哈萨克发货
+              {{item.name}}
             </article>
-            <div class="card-bottom">
+            <div class="card-bottom" @click.stop>
               <div class="left">
-                <p><img src="../../../../public/navbar/ly.png" style="padding-right: 5px"> {{ 100 }}</p>
-                <p style="margin-left: 20px">
-                  <van-icon name="good-job-o" size="18" style="padding-right: 5px"/>
-                  {{ 100 }}
+                <p><img src="../../../public/navbar/ly.png" style="padding-right: 5px"> {{ item.savaCOUNT }}</p>
+                <p style="margin-left: 20px" :class="'color'+item.id">
+                  <van-icon @click="like(item.id)"  name="good-job-o" size="18" style="padding-right: 5px"/>
+                  {{ item.likeCOUNT }}
                 </p>
               </div>
-              <div class="right">{{ '2022-08-19' }}</div>
+              <div class="right">{{ item.date?item.date.split(' ')[0]:'' }}</div>
             </div>
           </div>
         </div>
@@ -54,19 +51,34 @@
 </template>
 
 <script>
+import { mapState } from "vuex";
+import { clickGood } from "@/utils/articleLike";
+
 export default {
   name: "ExperienceList",
   data() {
     return {
-      active: 1,
+      data:null
     }
   },
+  computed:{...mapState(['userData'])},
   methods: {
-
-    //点赞
-    clickGood() {
-
+    async getData(){
+      let {data} = await this.$axios({
+        url:'/posting/getAllUser',
+        method:'get'
+      })
+      this.data = data.data
+    },
+    async like(posting){
+      await clickGood(this.userData.id,posting)
+      await this.getData()
+      let doc = document.getElementsByClassName(`color${posting}`)[0]
+      doc.style.color = 'rgba(0,245,225)'
     }
+  },
+  async mounted(){
+    await this.getData()
   }
 
 }

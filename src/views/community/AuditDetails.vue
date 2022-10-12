@@ -2,36 +2,35 @@
   <div id="">
     <Header :title="$route.meta.title"></Header>
     <div class="all" style="margin: 15px 20px;">
-      <h3 style="color: rgb(6,215,180)">申请人({{ 15 }})</h3>
+      <h3 style="color: rgb(6,215,180)">申请人({{ waitPeople?waitPeople.length:0 }})</h3>
       <div class="container">
         <ul>
-          <li v-for="item in 6">
+          <li v-for="item in waitPeople">
             <van-image
               fit="cover"
               height="50"
               radius="50"
-              src="https://img01.yzcdn.cn/vant/cat.jpeg"
+              :src="item.userImg"
               width="50"
             />
             <div class="info">
-              <p>姓名：{{ '张三' }}</p>
-              <p>班级：{{ '张三' }}</p>
-              <p>学院：{{ '张三' }}</p>
+              <p>姓名：{{ item.userName }}</p>
+              <p>学院：{{ item.userInstitute }}</p>
             </div>
             <div class="pass">
-              <van-icon color="#35e0bd" name="checked" size="35px" style="margin-right: 10px" @click="isAgree"/>
-              <van-icon color="#ff636f" name="clear" size="35px" @click="isReject"/>
+              <van-icon color="#35e0bd" name="checked" size="35px" style="margin-right: 10px" @click="isAgree(item.id)"/>
+              <van-icon color="#ff636f" name="clear" size="35px" @click="isReject(item.id)"/>
             </div>
           </li>
         </ul>
       </div>
-      <h4 style="color: rgb(6,215,180)">已通过({{ 5 }})</h4>
+      <h4 style="color: rgb(6,215,180)">已通过({{ passPeople?passPeople.length:0 }})</h4>
       <div class="pass reviewed">
-        <img v-for="item in 10" alt="" src="https://img01.yzcdn.cn/vant/cat.jpeg">
+        <img v-for="item in passPeople" alt="" :src="item.userImg">
       </div>
-      <h4 style="color: rgb(6,215,180)">未通过({{ 5 }})</h4>
+      <h4 style="color: rgb(6,215,180)">未通过({{ falsePeople?falsePeople.length:0 }})</h4>
       <div class="pass reviewed">
-        <img v-for="item in 10" alt="" src="https://img01.yzcdn.cn/vant/cat.jpeg">
+        <img v-for="item in falsePeople" alt="" :src="item.userImg">
       </div>
     </div>
   </div>
@@ -39,26 +38,94 @@
 
 <script>
 import Header from "@/components/Header";
+import { Toast } from "vant";
 
 export default {
   name: "AuditDetails",
   components: {Header},
 
   data() {
-    return {}
+    return {
+      audit:null,
+      waitPeople:null,
+      passPeople:null,
+      falsePeople:null
+    }
   },
   methods: {
     // 同意
-    isAgree(id, aid) {
-
+    async isAgree(id) {
+      let {data} =await this.$axios({
+        url:'/join/updateExamineById',
+        method:'post',
+        params:{
+          joinId:id
+        }
+      })
+      if(data.code === 0){
+        await this.getWaitPeople()
+        await this.getPassPeople()
+        await this.getFalsePeople()
+        Toast.success('已同意!')
+      }
     },
     // 拒绝
-    isReject(id, aid) {
-
-    }
+    async isReject(id) {
+      let {data} =await this.$axios({
+        url:'/join/updateExamine3ById',
+        method:'post',
+        params:{
+          joinId:id
+        }
+      })
+      if(data.code === 0){
+        await this.getWaitPeople()
+        await this.getPassPeople()
+        await this.getFalsePeople()
+        Toast.success('已拒绝!')
+      }
+    },
+    //待审核人
+    async getWaitPeople(){
+      let {data} =await this.$axios({
+        url:'/join/findActivityJoin',
+        method:'post',
+        params:{
+          activityId:this.audit
+        }
+      })
+      this.waitPeople = data.data
+    },
+    //通过的人
+    async getPassPeople(){
+      let {data} =await this.$axios({
+        url:'/join/findActivityJoinPass',
+        method:'post',
+        params:{
+          activityId:this.audit
+        }
+      })
+      this.passPeople = data.data
+    },
+    //不通过的人
+    async getFalsePeople(){
+      let {data} =await this.$axios({
+        url:'/join/findActivityJoinFailed',
+        method:'post',
+        params:{
+          activityId:this.audit
+        }
+      })
+      this.falsePeople = data.data
+    },
+  },
+  async mounted(){
+    await this.getWaitPeople()
+    await this.getPassPeople()
+    await this.getFalsePeople()
   },
   created() {
-    console.log(this.$route.params)
+    this.audit = this.$route.params.id
   }
 
 }

@@ -134,9 +134,12 @@ export default {
   methods: {},
   mounted() {
     let date = getTime()
-    date.day < 10 ? this.day = "0" + date.day : this.day = date.day
-    date.month < 10 ? this.month = "0" + date.month : this.day = date.month
+    console.log (date)
+    // date.day < 10 ? this.day = "0" + date.day : this.day = date.day
+    // date.month < 10 ? this.month = "0" + date.month : this.day = date.month
     this.week = date.Week
+    this.month = date.month
+    this.day = date.day
   },
   created() {
 
@@ -145,9 +148,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+:deep(.van-overlay){
+  z-index: 1000;
+}
 #nav {
-
-
+  :deep(.van-hairline--top-bottom){
+    z-index: 200;
+  }
   .van-tabbar {
     height: 65px;
     background-size: 105vw 185px;
@@ -174,7 +181,7 @@ export default {
   }
 
   &:deep(.van-overlay) {
-    background-color: rgba(255, 255, 255, .55);
+    background-color: rgba(150,150,150,.55);
     backdrop-filter: blur(5px);
   }
 
