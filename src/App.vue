@@ -1,8 +1,15 @@
 <template>
   <div id="app">
-    <router-view/>
-    <AppNavbar v-if="$route.meta.showTabBar"/>
-    <PopUp v-if="show === true" @myEvent="destroyPopup"></PopUp>
+<!--    <router-view/>-->
+    <transition name="fade" mode="out-in">
+      <keep-alive>
+        <router-view v-if="$route.meta.keepAlive"></router-view>
+      </keep-alive>
+    </transition>
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
+
+    <AppNavbar  v-if="$route.meta.showTabBar"/>
+<!--    <PopUp v-if="show === true" @myEvent="destroyPopup"></PopUp>-->
   </div>
 </template>
 <script>
@@ -20,20 +27,17 @@ export default {
     }
   },
   methods: {
-    destroyPopup() {
-      this.show = false
-    }
   },
   created() {
-    // if (localStorage.getItem("token") === null) {
-    //   localStorage.clear()
-    //   this.$router.replace({
-    //     path: "/login"
-    //   })
-    // }
-    // if (localStorage.getItem("token")!==null) {
-    //   this.show = true
-    // }
+    if (localStorage.getItem("token") === null) {
+      localStorage.clear()
+      this.$router.replace({
+        path: "/login"
+      })
+    }
+    if (localStorage.getItem("token")!==null) {
+      this.show = true
+    }
   }
 
 }

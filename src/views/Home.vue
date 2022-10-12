@@ -1,249 +1,477 @@
 <template>
   <div id="home">
     <header>
-      <div class="top">
-        <p style="margin: 0;">Logo</p>
-        <div class="right">
-          <van-icon name="search"/>
-          <van-icon dot name="envelop-o"/>
-        </div>
-      </div>
-      <div class="big-btn">
-        <div class="item">
-          <div class="">
-            <p class="title">今日推荐</p>
-            <p class="introduce">每天都有新资讯</p>
-          </div>
+      <van-swipe class="my-swipe" :autoplay="3000" indicator-color="white">
+        <van-swipe-item v-for="(item,index) in headerImg" :key="index">
           <van-image
-            style="margin-right: 8px"
-            width="25%"
-            height="80%"
+            height="25vh"
+            width="100vw"
             fit="cover"
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
+            :src="item"
           />
-        </div>
-        <div class="item">
-          <div class="">
-            <p class="title">数据观天下</p>
-            <p class="introduce">让诈骗更直观</p>
-          </div>
-          <van-image
-            style="margin-right: 8px"
-            width="25%"
-            height="80%"
-            fit="cover"
-            src="https://img01.yzcdn.cn/vant/cat.jpeg"
-          />
-        </div>
-      </div>
-      <!--      四小块-->
-      <div class="btn-list">
-        <div class="btn-item">
-          <img src="../../public/home/qrcode.png" @click="$router.push({
-        path: '/activity'
-        })">
-          <p>反诈行动</p>
-        </div>
-        <div class="btn-item" @click="$router.push({
-        path: '/QR-code'
-        })">
-          <img src="../../public/home/qrcode.png">
-          <p>反骗码</p>
-        </div>
-        <div class="btn-item" @click="$router.push({path:'/bookshelf'})">
-          <img src="../../public/home/qrcode.png">
-          <p>电子书</p>
-        </div>
-        <div class="btn-item" @click="$router.push({path:'/'})">
-          <img src="../../public/home/qrcode.png">
-          <p>热门资讯</p>
-        </div>
-        <div class="btn-item">
-          <img src="../../public/home/qrcode.png">
-          <p>反骗码</p>
-        </div>
-      </div>
+        </van-swipe-item>
+      </van-swipe>
+      <img src="../assets/home/hotA.png" @click="$router.push({
+      path:'/activity'
+      })" alt="">
     </header>
-    <div class="body">
-
-    </div>
-    <div class="live-team">
-      <div class="live-team-title">
-        <span class="title">视频学习</span>
-        <span class="more">查看更多</span>
-      </div>
-      <div class="item">
-        <div class="item-box">
-          <div class="child-item">
-            <div>
-              <img alt="" src="../../public/home/R-C.jpg">
-
+    <div class="body" style="padding: 10px;margin-top: 50px;padding-bottom: 100px">
+      <!--24小时反诈中心-->
+      <div class="tf-hour">
+        <p class="titleA">24小时安全中心</p>
+        <ul class="content">
+          <li @click="show1=true">
+            <div class="icon" style="background-image: linear-gradient(to right,rgba(239,170,81),rgba(235,142,40))">
+              <img src="../assets/home/phone.png" alt="">
             </div>
-            <p class="video-title">反诈视频</p>
-            <p class="author">张三</p>
+            <p>校园110热线</p>
+          </li>
+          <li>
+            <div class="icon" style="background-image: linear-gradient(to right,rgba(87,178,229),rgba(78,155,203))">
+              <img src="../assets/home/robot.png" alt="" @click="$router.push({
+              path:'/reboot'
+              })">
+            </div>
+            <p>安全小助手</p>
+          </li>
+          <li @click="show2=true">
+            <div class="icon" style="background-image: linear-gradient(to right,rgba(120,95,148),rgba(103,75,149))">
+              <img src="../assets/home/people.png" alt="">
+            </div>
+            <p>思政热线</p>
+          </li>
+        </ul>
+        <p class="titleA">今日头条</p>
+        <div class="other-box">
+          <div v-for="(item,index) in hotList" v-if="hotList" class="kuan" :key="index">
+            <div class="kuan-1">
+              <div class="kuan-nei" @click="$router.push({
+              path:'/NewDetails2',
+              query:{
+                id:item.id
+              }
+              })">
+                <img alt="" :src="item.img">
+                <div class="vv">{{ item.name }}<span>{{item.date? item.date.split (' ')[0]:'' }}</span></div>
+                <!--              点赞分享-->
+                <home-page @onLike="like" @click.stop :chatData="item"></home-page>
+                <!--              点赞分享-->
+              </div>
+              <div style="padding-bottom: 20px; background-color: white">
+                &nbsp
+                <div>&nbsp</div>
+                <div>&nbsp</div>
+              </div>
+            </div>
           </div>
-          <div class="child-item">
-            <div>
-              <img alt="" src="../../public/home/R-C.jpg">
-            </div>
-            <p class="video-title">反诈视频</p>
-            <p class="author">张三</p>
+          <span class="see-more" @click="$router.push({
+          path:'/hot'
+          })">查看更多</span>
+        </div>
+        <p class="titleA">热门活动</p>
+        <div class="other-box" v-if="list">
+          <div  v-for="(item,index) in list" :key="index" class="van-hairline--bottom item" @click="$router.push({
+            name:'ActivityDetails',
+            params: {
+              id:item.id
+            }
+            })">
+            <van-image
+              :src="item.img"
+              fit="cover"
+              height="25vh"
+              width="100%"
+            />
+            <p class="title" style="border-left: 6px solid rgb(3,204,198);padding-left: 3px">{{ item.name }}</p>
+            <p style="font-size: 10px;color: #cccccc">
+              <span style="margin-right: 12vw;padding-left: 9px">地区 ：{{ item.location.split('区')[0] + '区' }}</span>
+              <span>人数 ：{{ item.nowNum }}/{{ item.needNum }}人</span>
+            </p>
+          </div>
+          <span class="see-more" @click="$router.push({
+          path:'/activity'
+          })">查看更多</span>
+        </div>
+        <p class="titleA">反诈之星</p>
+        <div class="other-box">
+          <div class="bg-box">
+            <div class="sm-box"></div>
+            <ul class="content-box" v-if="topThree">
+              <li  style="width: 28%;height: 60%;">
+                <van-image
+                  width="45px"
+                  radius="50%"
+                  :src="topThree[1].userImg"
+                />
+                <p class="name">{{topThree[1].userName}}</p>
+                <p class="academy">{{topThree[1].userInstitute}}</p>
+                <p class="point">{{topThree[1].sumNumber}}</p>
+                <img class="jiang" src="../assets/home/third.png" alt="">
+              </li>
+              <li style="width: 35%;height: 18vh;">
+                <van-image
+                  width="60px"
+                  radius="50%"
+                  :src="topThree[0].userImg"
+                />
+                <div style="height: 10%;"></div>
+                <p class="name">{{topThree[0].userName}}</p>
+                <p class="academy">{{topThree[0].userInstitute}}</p>
+                <p class="point">{{topThree[0].sumNumber}}</p>
+                <img class="jiang" src="../assets/home/first.png" alt="">
+              </li>
+              <li style="width: 28%;height: 60%;">
+                <van-image
+                  width="45px"
+                  radius="50%"
+                  :src="topThree[2].userImg"
+                />
+                <p class="name">{{topThree[2].userName}}</p>
+                <p class="academy">{{topThree[2].userInstitute}}</p>
+                <p class="point">{{topThree[2].sumNumber}}</p>
+                <img class="jiang" src="../assets/home/second.png" alt="">
+              </li>
+
+            </ul>
           </div>
         </div>
+        <p class="titleA">二级学院活跃排行榜</p>
+        <div class="other-box">
+          <ul class="second-xy" v-if="topT">
+            <li style="margin-top: 65px">
+              <div class="img">
+                <van-image
+                  radius="50%"
+                  :src="topT[1].instituteImg"
+                  width="65px"
+                />
+              </div>
+              <span style="background:rgba(236,236,236);">2</span>
+              <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[1].userInstitute}}</p>
+            </li>
+            <li style="margin-top: 15px">
+              <div class="img">
+                <van-image
+                  :src="topT[0].instituteImg"
+                  width="65px"
+                  radius="50%"
+                />
+                <img src="../assets/home/hg.png" alt="">
+              </div>
+              <span style="background:rgba(254,253,4);">2</span>
+              <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[0].userInstitute}}</p>
 
+            </li>
+            <li style="margin-top: 65px">
+              <div class="img">
+                <van-image
+                  radius="50%"
+                  :src="topT[1].instituteImg"
+                  width="65px"
+                />
+              </div>
+              <span style="background:rgba(192,150,109);">2</span>
+              <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[2].userInstitute}}</p>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
+    <van-popup v-model="show1" position="bottom">
+      <div class="btn" @click="callPhone2">
+        <van-icon color="rgb(147,147,147)" size="26" name="phone" />
+        联系值班老师
+      </div>
+      <div class="btn" style="margin-bottom: 20px" @click="show1=false">
+        取消
+      </div>
+    </van-popup>
+    <van-popup v-model="show1" position="bottom">
+      <div class="btn" @click="callPhone2">
+        <van-icon color="rgb(147,147,147)" size="26" name="phone" />
+        校园110热线
+      </div>
+      <div class="btn" style="margin-bottom: 20px" @click="show2=false">
+        取消
+      </div>
+    </van-popup>
   </div>
 </template>
 
 <script>
-import PopUp from "@/components/Pop-up";
+
+import HomePage from "@/components/home_page";
+import { mapState } from "vuex";
+import { joinHotLike } from "@/utils/joinHotLike";
+import { Toast } from "vant";
 
 export default {
   name: "Home",
-  components: {PopUp},
+  components: { HomePage },
+  computed:{...mapState(["userData"])},
   data(){
     return {
+      headerImg:[require('../assets/home/1.png'),require('../assets/home/2.png'),require('../assets/home/3.png'),],
+      hotList: null,
+      list:null,
+      topThree:null,//前三
+      topT:null,//前三学院
+      show1:false,
+      show2:false
     }
   },
   created(){
   },
   methods:{
-
+    async getRecommendList () {
+      let { data } = await this.$axios ({
+        method: "get",
+        url: "/headlines/getAllUser"
+      })
+      this.hotList = []
+      this.hotList.push(data.data[0])
+    },
+    async like(val){
+      await joinHotLike(this.userData.id,val.id,1)
+      await this.getRecommendList()
+    },
+    async getActivity(){
+      let {data} = await this.$axios({
+        methods: 'GET',
+        url: '/activity/getAllUser'
+      })
+      if (data.code === 20000) {
+        this.list = []
+        this.list.push(data.data[0])
+      } else {
+        Toast.fail('对不起,系统出错了!!!')
+      }
+    },
+    async getTopThree(){
+      let {data} = await this.$axios({
+        url:'/points/getAllSumPointsLimit3',
+        method:'get'
+      })
+      this.topThree = data.data
+    },
+    async getT(){
+      let {data} = await this.$axios({
+        url:'/points/getAllSumPointsInsLimit3',
+        method:'get'
+      })
+      this.topT = data.data
+    },
+    //拨打电话
+    callPhone1() {
+      window.location.href = 'tel://' + '13185021554'
+    },
+    callPhone2() {
+      window.location.href = 'tel://' + '13186021554'
+    },
+  },
+  async mounted() {
+    await this.getRecommendList()
+    await this.getActivity()
+    await this.getTopThree()
+    await this.getT()
   }
 }
 </script>
 
 <style lang="less" scoped>
 #home {
+header{
   position: relative;
-  height: 100vh;
-  background-color: rgba(247,248,250);
-  header {
-    background-image: linear-gradient(20deg, white 35%,  rgba(199,210,249,.8) 72%, rgba(231,235,251));
-    border-bottom-left-radius: 20px;
-    border-bottom-right-radius: 20px;
-    padding-bottom: 15px;
-    .top {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 26px;
-      padding: 10px 15px;
-      color: black;
-      font-weight: 600;
-
-      .van-icon {
-        padding-left: 15px;
+  img{
+    position: absolute;
+    width: 84vw;
+    z-index: 100;
+    bottom: -30px;
+    display: inline-block;
+    left: 8vw;
+    border-radius: 12px;
+  }
+}
+.tf-hour{
+  .titleA{
+    border-left: 4px solid rgba(1,199,202);
+    padding-left: 5px;
+    font-weight: 600;
+    font-size: 20px;
+    color: rgba(0,223,184);
+    margin-bottom: 0;
+  }
+  .content{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 20px 15px;
+    li{
+      .icon{
+        width: 60px;
+        height: 60px;
+        padding: 3px;
+        border-radius: 25px;
+        text-align: center;
+        margin: 0 auto;
+        img{
+          margin-top: 10%;
+          width: 80%;
+          height: 80%;
+        }
+      }
+      p{
+        font-size: 14px;
+        text-align: center;
       }
     }
-    .big-btn{
-      display: flex;
-      justify-content: space-around;
-      padding: 15px;
-      .item{
+  }
+  .other-box{
+    margin-top: 15px;
+    .kuan {
+      margin: 20px 15px 0px 15px;
+      padding: 10px 10px 15px 40px;
+      background-color: rgba(96, 217, 212, 0.3);
+      //height: 200px;
+      .kuan-1 {
+        padding-top: 15px;
+        background: linear-gradient(to left, #12bbd1, #00cfc2, #1ad5b7);
+      }
+
+      .kuan-nei {
+        width: 105%;
+        margin: 0px 0px -75px -27px;
+        font-size: 14px;
+        color: #a8a4a4;
+        background-color: white;
+
+        img {
+          width: 100%;
+          height: 80%;
+        }
+
+        .vv {
+          padding: 8px 10px;
+          align-items: center;
+          display: flex;
+          justify-content: space-between;
+          background-color: white
+        }
+      }
+    }
+    .see-more{
+      font-size: 10px;
+      color: #989696;
+      float: right;
+      margin-right: 15px;
+      margin-top: 3px;
+    }
+    .bg-box{
+      height: 26vh;
+      margin: 0 auto;
+      width: 90vw;
+      background-color: rgba(202,243,245);
+      padding: 15px 30px 0 30px;
+      position: relative;
+      box-sizing: border-box;
+      .sm-box{
+        width: 100%;
+        height: 100%;
+        background-color: rgba(105,223,227);
+      }
+      .content-box{
+        z-index: 100;
+        position: absolute;
+        width: 100%;
+        left: 50%; top: 50%;
+        transform: translate(-50%, -50%);    /* 50%为自身尺寸的一半 */
         display: flex;
         justify-content: space-around;
         align-items: center;
-        background-color: white;
-        padding: 5px 0;
-        border-radius: 18px;
-        &:nth-child(1){
-          margin-right: 10px;
-        }
-        p{
-          margin: 10px;
-        }
-        .title {
-          font-size: 16px;
-          font-weight: 600;
-        }
-        .introduce{
-          font-size: 10px;
+        li{
+          position: relative;
+          background-color: white;
+          border-radius: 8px;
+          text-align: center;
+          padding-top: 25px;
+          p{
+            margin: 0;
+          }
+          .name{
+            font-size: 14px;
+            font-weight: 600;
+          }
+          .academy{
+            font-size: 10px;
+            color: #cccccc;
+          }
+          .point{
+            color: red;
+            font-weight: 600;
+          }
+          .jiang{
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+          }
         }
       }
     }
-    .btn-list {
+    .second-xy{
       display: flex;
       justify-content: space-around;
-      align-items: center;
-      padding: 0 15px 20px;
-
-      .btn-item {
-        width: 20%;
+      background-image: url("../assets/home/123.png");
+      background-size: 100% 100%;
+      height: 20vh;
+      li{
+        position: relative;
+        background-color: transparent;
+        width: 65px;
+        height: 65px;
+        min-width: 30%;
         text-align: center;
-        padding: 10px 8px;
-        box-sizing: border-box;
-        border-radius: 15px;
-
-        p {
-          margin: 0;
-          font-size: 10px;
-          text-align: center;
-        }
-
-        img {
-          background-color: white;
-          padding: 6px;
-          width: 10vw;
-          border-radius: 20px;
-        }
-      }
-    }
-
-  }
-
-  .body {
-    position: relative;
-
-  }
-
-  .live-team {
-    padding: 5vh 20px;
-
-    .live-team-title {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-
-      .title {
-        font-size: 18px;
-        font-weight: 600;
-      }
-
-      .more {
-        font-size: 12px;
-        color: #646464;
-      }
-    }
-    .item{
-      max-width: 100vw;
-
-      overflow-x: scroll;
-      overflow-y: hidden;
-      &::-webkit-scrollbar{
-        display: none;
-      }
-      .item-box {
-        margin: 15px 0;
-        display: flex;
-        width: 200vw;
-
-        .child-item{
-          margin-right: 15px;
+        .img{
+          position: relative;
           img{
-            width: 30vw;
-            border-radius: 18px;
+            position: absolute;
+            top: -10px;
+            left: 20px;
+            width: 26px;
           }
-          p{
-            margin: 5px 0;
-            padding-left: 5px;
-            font-size: 12px;
-          }
+        }
+        span{
+          border-radius: 50%;
+          position: absolute;
+          left: calc(50% - 11px);
+          bottom: -7px;
+          display: inline-block;
+          width: 14px;
+          height: 14px;
+          line-height: 14px;
+          text-align: center;
+          padding: 6px;
         }
       }
     }
-
+  }
+}
+:deep(.van-overlay){
+  background-color: rgba(0,0,0,.2);
+}
+  :deep(.van-popup){
+    background-color: transparent;
+    .btn{
+      background-color: white;
+      margin: 4px 30px;
+      padding: 10px 35px;
+      font-size: 20px;
+      color:rgba(7,225,186) ;
+      font-weight: 600;
+      text-align: center;
+      border-radius: 14px;
+    }
   }
 }
 </style>

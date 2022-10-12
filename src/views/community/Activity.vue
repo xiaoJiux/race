@@ -26,8 +26,7 @@
       <div v-for="(item,index) in list" :key="index" class="van-hairline--bottom item" @click="$router.push({
       name:'ActivityDetails',
       params: {
-        id:item.id,
-        item
+        id:item.id
       }
       })">
         <van-image
@@ -43,11 +42,6 @@
         </p>
       </div>
     </div>
-    <!--    <van-popup v-model="show" style="border-radius: 25px" @click="show = false">-->
-    <!--      <div class="wrapper">-->
-    <!--        <Activity_card :data="passCdata"/>-->
-    <!--      </div>-->
-    <!--    </van-popup>-->
   </div>
 </template>
 

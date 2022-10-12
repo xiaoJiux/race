@@ -38,6 +38,7 @@
 
 import {LocalStorage} from "@/utils/localStorage";
 import {Toast} from "vant";
+import { mapState } from "vuex";
 
 export default {
   name: "Login",
@@ -47,24 +48,23 @@ export default {
       password: '1234567',
     };
   },
+  computed:{...mapState(["userData"])},
   methods: {
     //信息填写错误
     onFailed(fail) {
-      console.log(fail);
       Toast("请输入的账号或密码")
     },
     //登录
     async onSubmit(values) {
-      console.log(values);
       let {data} = await this.$axios({
         method: 'POST',
         url: '/user/findUserByNameAndPassword',
         params: values
       })
 
-      console.log(data);
       if (data.code === 20000) {
         LocalStorage(data.token.token, data.data[0])
+        this.$store.state.userData = data.data[0]
         const toast = Toast.loading({
           duration: 0,
           forbidClick: true,
@@ -77,9 +77,18 @@ export default {
             clearInterval(timer);
             // 手动清除 Toast
             Toast.clear();
-            this.$router.replace({
-              path: '/'
-            })
+            if(this.password === '123456'){
+              this.$router.replace({
+                path: '/activation',
+                query:{
+                  data:data.data[0]
+                }
+              })
+            }else{
+              this.$router.replace({
+                path: '/',
+              })
+            }
           }
         }, 1000);
 

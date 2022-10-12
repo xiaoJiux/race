@@ -18,7 +18,7 @@
         </div>
         <div style="font-size: 12px;margin-top: 15px;">
           <span style="padding-right: 20px">活动总人数 ：{{ item.nowNum }} / {{ item.needNum }}</span>
-          <span>待审核 ：{{ 10 }}人</span>
+          <span>待审核 ：{{ item.duserSum }}人</span>
         </div>
       </div>
     </article>
@@ -27,38 +27,32 @@
 
 <script>
 import Header from "@/components/Header";
+import { mapState } from "vuex";
 
 export default {
   name: "Audit",
   components: {Header},
   data() {
     return {
-      list: [{
-        people: [{//参加活动的的用户
-          id: 1,
-          img: '',//头像
-          name: '',
-        }],//参加活动的人
-        id: 1,//活动id
-        nowNum: 5,//已经参加人数
-        needNum: 10,//最大人数
-        name: '个人成长图书会',//活动名称
-        img: 'https://img01.yzcdn.cn/vant/cat.jpeg',//现场图片
-        phone: '18858444327',//主办人手机号
-        start: '2020.08.16 ',//报名开始时间
-        end: '2020.08.17',//报名结束时间
-        userName: '张三',
-        unit: "服务小分队",//举办单位
-        //活动详情
-        content: "通过 round 属性可以设置图片变圆，注意当图片宽高不相等且 fit 为 contain 或 scale-down 时，将无法填充一个完整的圆形。",
-        time: '',//活动开始时间
-        overTime: '',//活动开始时间
-        location: '宁波市镇海区庄市街道街道核酸采样综合服务点',//地址
-        claim: '当天下午提前半小时到达',//志愿者要求
-      }]
+      list: null
     }
   },
-  methods: {}
+  computed: { ...mapState(["userData"]) },
+  methods: {
+    async getAcitivity(){
+      let {data} = await this.$axios({
+        url:'/activity/findByUserId',
+        method:'post',
+        params:{
+          userId:this.userData.id
+        }
+      })
+      this.list = data.data
+    }
+  },
+  async mounted () {
+    await this.getAcitivity()
+  }
 
 }
 </script>

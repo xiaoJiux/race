@@ -11,7 +11,9 @@
         <span @click="$router.push({
         path: '/video'
         })">视频</span>
-        <span>视觉探索</span>
+        <span @click="$router.push({
+        path:'/view'
+        })">视觉探索</span>
       </div>
       <!--    搜索框on-->
       <div class="search_header" @click="$router.push({

@@ -146,8 +146,9 @@ export default {
 
 <style lang="less" scoped>
 #nav {
-
-
+  :deep(.van-hairline--top-bottom){
+    z-index: 200;
+  }
   .van-tabbar {
     height: 65px;
     background-size: 105vw 185px;

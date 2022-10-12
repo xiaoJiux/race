@@ -32,8 +32,8 @@ export function getTime() {
   }
 }
 
-export function fmtTime(value) {
-  let date = new Date(value),
+export function fmtTime() {
+  let date = new Date(),
     YY = date.getFullYear(),
     MM = date.getMonth() + 1,
     DD = date.getDate(),

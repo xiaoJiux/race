@@ -42,7 +42,7 @@ const routes = [
   {
     path: '/ExperienceList',
     name: 'ExperienceList',
-    component: () => import('@/views/community/Experience/ExperienceList'),
+    component: () => import('@/views/community/ExperienceList'),
   },
   //贴子详情
   {
@@ -110,6 +110,14 @@ const routes = [
     component: ()=>import('@/views/user/Mydiscuss'),
     meta:{
       title:'我的评论'
+    }
+  },
+  {
+    path:'/myCollect',
+    name:'myCollect',
+    component: ()=>import('@/views/user/MyCollect'),
+    meta:{
+      title:'我的收藏'
     }
   },
   {
@@ -212,6 +220,51 @@ const routes = [
       title:'资讯列表'
     }
   },
+  {
+    path:'/point',
+    name:'point',
+    component: () =>import('@/views/user/PointDetail'),
+    meta: {
+      title:'积分明细'
+    }
+  },
+  {
+    path:'/exchange',
+    name:'ExChange',
+    component: () =>import('@/views/user/ExChange'),
+    meta: {
+      title:'积分兑换'
+    }
+  },
+  {
+    path:'/view',
+    name:'ViewPage',
+    component: () => import('@/views/study/view/ViewPage'),
+    meta:{
+      title:'视觉探索',
+      keepAlive:true
+    }
+  },
+  {
+    path:'/viewDetail',
+    name:'ViewDetail',
+    component: () => import('@/views/study/view/ViewDetail'),
+    meta:{
+      title:'视觉探索'
+    }
+  },
+  {
+    path:'/reboot',
+    name:'Reboot',
+    component: () => import('@/views/home/Reboot'),
+    meta:{
+      title:'安全小助手'
+    }
+  },
+  {
+    path:'/firstpage',
+    component: () => import('@/views/FirstPage')
+  }
 ]
 
 const router = new VueRouter({
