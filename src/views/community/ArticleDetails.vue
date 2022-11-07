@@ -94,6 +94,7 @@ export default {
   },
   created () {
     this.aID = this.$route.query.id
+    console.log (this.aID)
   }
 }
 </script>

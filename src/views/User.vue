@@ -188,7 +188,6 @@ export default {
     }
   },
   async mounted() {
-    console.log (this.userData)
     await this.getPoint()
     myChart(document.getElementById("myEcharts"),[this.pointD.type1,this.pointD.type3,this.pointD.type6,this.pointD.type2,this.pointD.type1,])
   }

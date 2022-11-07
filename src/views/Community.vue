@@ -45,7 +45,7 @@
     </div>
     <div v-if="articleList" v-for="item in articleList" class="art-item" :key="item.id" @click="$router.push({
         path: '/article',
-        params: {
+        query: {
           id:item.id
         }
       })">
@@ -77,7 +77,7 @@
                 {{ item.likeCOUNT }}
               </p>
             </div>
-            <div class="right">{{ '2022-08-19' }}</div>
+            <div class="right">{{ item.date?item.date.split(' ')[0] : '' }}</div>
           </div>
         </div>
       </div>
@@ -163,6 +163,7 @@ export default {
         url:'/posting/getAllForIndex'
       })
       this.articleList = data.data
+      console.log (this.articleList);
     },
     async getRecommendList () {
       let { data } = await this.$axios ({

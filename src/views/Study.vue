@@ -16,9 +16,7 @@
         })">视觉探索</span>
       </div>
       <!--    搜索框on-->
-      <div class="search_header" @click="$router.push({
-      path: '/stydtvideo'
-      })">
+      <div class="search_header">
         <input placeholder="" style="background-color: transparent;border: none;width: 30vw; " type="text"/>
         <van-icon color="rgb(96, 217, 212)" name="search" size="22" style="padding-right: 8px;"/>
       </div>

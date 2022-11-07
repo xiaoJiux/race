@@ -48,6 +48,7 @@ export default {
         }
       })
       this.list = data.data
+      console.log (this.list)
     }
   },
   async mounted () {
