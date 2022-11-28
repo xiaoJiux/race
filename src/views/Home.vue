@@ -149,16 +149,16 @@
               <span style="background:rgba(236,236,236);">2</span>
               <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[1].userInstitute}}</p>
             </li>
-            <li style="margin-top: 15px">
-              <div class="img">
+            <li style="margin-top: 15px;">
+              <div class="img" >
                 <van-image
                   :src="topT[0].instituteImg"
                   width="65px"
                   radius="50%"
                 />
-                <img src="../assets/home/hg.png" alt="">
+                <img  src="../assets/home/hg.png" alt="">
               </div>
-              <span style="background:rgba(254,253,4);">2</span>
+              <span style="background:rgba(254,253,4);">1</span>
               <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[0].userInstitute}}</p>
 
             </li>
@@ -170,7 +170,7 @@
                   width="65px"
                 />
               </div>
-              <span style="background:rgba(192,150,109);">2</span>
+              <span style="background:rgba(192,150,109);">3</span>
               <p style="font-size: 10px;text-align: center;margin-top: 5px;">{{topT[2].userInstitute}}</p>
             </li>
           </ul>
@@ -437,7 +437,7 @@ header{
           img{
             position: absolute;
             top: -10px;
-            left: 20px;
+            left: 50% - 13px;
             width: 26px;
           }
         }

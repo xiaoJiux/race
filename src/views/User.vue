@@ -20,7 +20,8 @@
       <div class="learn-num">
         <p>学习天数</p>
         <p><span>{{pointD?pointD.clockDay:0}}</span>天</p>
-        <p style="font-size: 14px">签到</p>
+        <p style="font-size: 14px" @click="signIn" v-if="!sign">签到</p>
+        <p style="font-size: 14px" @click="signIn" v-else>已签到</p>
       </div>
       <!--      积分-->
       <div class="integral" @click="$router.push({
@@ -144,12 +145,14 @@ import {clear} from "@/utils/localStorage";
 import {Toast} from "vant";
 import {mapState} from "vuex";
 import {myChart} from "@/utils/echarts";
+import { fmtTime, getTime } from "@/utils/getTime";
 
 export default {
   name: "User",
   data() {
     return {
-      pointD:null
+      pointD:null,
+      sign:false
     }
   },
   computed: { ...mapState(["userData"]) },
@@ -185,6 +188,23 @@ export default {
         }
       })
       this.pointD = data.data[0]
+    },
+    //签到
+    async signIn(){
+      let {message,code} = await this.$axios({
+        method:'post',
+        url:'/clock/save',
+        data:{
+          user:this.userData.id,
+          date:fmtTime()
+        }
+      })
+      if(code === 0){
+        Toast.success('签到成功!')
+      }else{
+        Toast("对不起今天你已经签到过了")
+      }
+      this.sign = true
     }
   },
   async mounted() {

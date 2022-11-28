@@ -9,15 +9,12 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
 
     <AppNavbar  v-if="$route.meta.showTabBar"/>
-<!--    <PopUp v-if="show === true" @myEvent="destroyPopup"></PopUp>-->
   </div>
 </template>
 <script>
 import AppNavbar from "@/components/AppNavbar";
 import PopUp from "@/components/Pop-up";
-import {clear} from "@/utils/localStorage";
-import axios from "axios";
-import {mapState} from "vuex";
+
 
 export default {
   components: {AppNavbar, PopUp},
@@ -34,9 +31,6 @@ export default {
       this.$router.replace({
         path: "/login"
       })
-    }
-    if (localStorage.getItem("token")!==null) {
-      this.show = true
     }
   }
 

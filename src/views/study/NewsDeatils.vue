@@ -72,7 +72,6 @@ export default {
         }
       })
       this.chartList = data.data[0]
-      // console.log (this.chartList);
     },
     //发送评论
     async sendMsg(val){

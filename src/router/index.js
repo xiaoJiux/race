@@ -6,6 +6,10 @@ Vue.use(VueRouter)
 
 const routes = [
   {
+    path:'/firstPage',
+    component: () => import('@/views/FirstPage')
+  },
+  {
     path: '/',
     name: 'home',
     component: Home,
@@ -261,10 +265,7 @@ const routes = [
       title:'安全小助手'
     }
   },
-  {
-    path:'/firstPage',
-    component: () => import('@/views/FirstPage')
-  }
+
 ]
 
 const router = new VueRouter({

@@ -20,24 +20,12 @@
         <div class="box-content">
           <p class="content" style="font-size: 12px">{{item.say}}</p>
           <div class="child-header">
+            <span style="font-size: 10px;color: #ccccc1">{{item.date?item.date.split(" ")[0]:''}}</span>
             <p class="time" style="font-size:10px;color: #cccccc">{{item.data?item.date.split(" ")[0]:''}}<span
               style="margin-left: 15px;font-size: 10px;background-color:#eeeeee;padding: 2px 8px;color: #918f8f;border-radius: 15px;">回复</span>
             </p>
-            <div class="right-hot">
-              <van-icon name="arrow-up"/>
-              <span>{{ item.likeCOUNT }}</span>
-              <van-icon name="arrow-down"/>
-            </div>
           </div>
         </div>
-<!--        <ul class="child-forum">-->
-<!--          <li>-->
-<!--            <span class="name">张无忌</span> ：哈哈哈-->
-<!--          </li>-->
-<!--          <li>-->
-<!--            <span class="name">张无忌</span> ：哈哈哈-->
-<!--          </li>-->
-<!--        </ul>-->
       </li>
     </ul>
     <div class="van-hairline--top input">
@@ -130,7 +118,7 @@ export default {
         .child-header {
           padding-left: 65px;
           display: flex;
-          justify-content: space-between;
+          //justify-content: space-between;
           align-items: center;
           margin: 8px 0;
 
