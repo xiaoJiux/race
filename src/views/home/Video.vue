@@ -125,11 +125,11 @@ export default {
   methods: {
     onChange(index) {
       this.index = index
-      this.getChart()
-      var player = document.getElementById(`player${index}`);
+      this.getChart(this.swiperList[index].id)
+      let player = document.getElementById(`player${index}`);
       if (player.paused) {
         this.swiperList.forEach((item, s_index) => {
-          if (s_index == index) {
+          if (s_index === index) {
             document.getElementById(`player${s_index}`).play();
             item.play = true;
           } else {
@@ -143,6 +143,7 @@ export default {
           item.play = false;
         });
       }
+      this.show = false
     },
     async likeIT(id){
       let {data} = await this.$axios({
@@ -286,8 +287,9 @@ header {
 }
 
 .video {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: rgb(0, 0, 0);
   //background-image: linear-gradient(to bottom, #000000, #000000);
   .my-swipe .van-swipe-item {

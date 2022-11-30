@@ -99,7 +99,9 @@
           <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
-      <div class="item van-hairline--bottom">
+      <div class="item van-hairline--bottom" @click="$router.push({
+      path:'/setInfo'
+      })">
         <div class="left">
           <img src="../../public/other_icon/user/fate.png">
           <span>账户管理</span>
