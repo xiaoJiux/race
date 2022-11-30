@@ -34,14 +34,14 @@
     </div>
     <div class="data"
          style="margin: 10px;background-color: rgb(228,250,248);display: flex;justify-content: space-between;align-items: center">
-      <div id="myEcharts" ref="Echarts" style="width: 45vw;height: 35vw;"></div>
-      <div class="show-data" style="max-width: 45vw;padding: 15px 2px;">
+      <div id="myEcharts" ref="Echarts" style="width: 50vw;height: 35vw;"></div>
+      <div class="show-data" style="max-width: 40vw;padding: 15px 2px;">
         <ul style="display: flex;flex-wrap: wrap;justify-content: space-between;font-size: 10px">
-          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">签到：<span>{{ pointD?pointD.type1:0 }}</span></li>
-          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">评论：<span>{{ pointD?pointD.type2:0 }}</span></li>
-          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">心得：<span>{{ pointD?pointD.type3:0 }}</span></li>
-          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">活动：<span>{{ pointD?pointD.type:0 }}</span></li>
-          <li style="padding:10px 8px;font-size: 14px;color: rgb(140,140,140)">收藏：<span>{{ pointD?pointD.type6:0 }}</span></li>
+          <li style="width: 20vw;padding: 8px 0;font-size: 12px;color: rgb(140,140,140)">签到：<span>{{ pointD?pointD.type1:0 }}</span></li>
+          <li style="width: 20vw;padding: 8px 0;font-size: 12px;color: rgb(140,140,140)">评论：<span>{{ pointD?pointD.type2:0 }}</span></li>
+          <li style="width: 20vw;padding: 8px 0;font-size: 12px;color: rgb(140,140,140)">心得：<span>{{ pointD?pointD.type3:0 }}</span></li>
+          <li style="width: 20vw;padding: 8px 0;font-size: 12px;color: rgb(140,140,140)">活动：<span>{{ pointD?pointD.type:0 }}</span></li>
+          <li style="width: 20vw;padding: 8px 0;font-size: 12px;color: rgb(140,140,140)">收藏：<span>{{ pointD?pointD.type6:0 }}</span></li>
         </ul>
       </div>
     </div>
@@ -99,7 +99,9 @@
           <van-icon color="#cccccc" name="arrow" size="24"/>
         </div>
       </div>
-      <div class="item van-hairline--bottom">
+      <div class="item van-hairline--bottom" @click="$router.push({
+      path:'/setInfo'
+      })">
         <div class="left">
           <img src="../../public/other_icon/user/fate.png">
           <span>账户管理</span>
@@ -218,6 +220,9 @@ export default {
 #user {
   background-color: rgba(247, 248, 250);
   padding: 15px 15px 10vh;
+  ul>li{
+    width: 16vw;
+  }
 
   .user-nh {
     display: flex;

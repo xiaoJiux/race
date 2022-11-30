@@ -36,8 +36,8 @@
           </div>
         </div>
       </van-tab>
-      <van-tab title="贴子">内容 3</van-tab>
-      <van-tab title="视频">内容 4</van-tab>
+      <van-tab title="贴子">暂无</van-tab>
+      <van-tab title="视频">暂无</van-tab>
     </van-tabs>
   </div>
 </template>

@@ -38,6 +38,7 @@ export default {
   props: ['chatData', 'chatId'],
   methods: {
     like(){
+      console.log (1)
       this.$emit("onLike", { id:this.chatData.id })
       this.color = true
     }

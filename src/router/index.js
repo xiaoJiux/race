@@ -265,7 +265,14 @@ const routes = [
       title:'安全小助手'
     }
   },
-
+  {
+    path:'/setInfo',
+    name:'SetInfo',
+    component: () => import('@/views/user/SetInfo'),
+    meta:{
+      title: '账户管理'
+    }
+  }
 ]
 
 const router = new VueRouter({

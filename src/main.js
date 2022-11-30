@@ -12,7 +12,7 @@ import axios from 'axios'
 
 Vue.use(Vant);
 axios.defaults.baseURL = "http://www.wuhuazai.com"
-// axios.defaults.baseURL = "http://localhost:8080"
+// axios.defaults.baseURL = "http://172.20.10.7:8080/"
 // axios.defaults.headers.common['Content-Type'] = 'application/json'
 if (localStorage.getItem('token') !== null) {
   console.log('token is setting');

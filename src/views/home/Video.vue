@@ -1,5 +1,5 @@
 <template>
-  <div class="video">
+  <div class="video" style="height: 100%">
     <header style="width: 100vw;box-sizing: border-box;position: fixed;top: 0;z-index: 100">
       <div class="left-text">
         <router-link to="/study">主题</router-link>
@@ -48,7 +48,7 @@
             </svg>
             <div class="text">{{ item.saveCOUNT }}</div>
           </div>
-          <div class="click-info">
+          <div class="click-info" @click="getChart(item.id)">
             <img @click="getChart(item.id)" src="../../assets/msg.png" alt="">
           </div>
         </div>
@@ -58,7 +58,7 @@
         </div>
         <video
           :id="`player${index}`"
-          :src="item.content"
+          :src="viedoList[index]"
           class="video-content"
           muted
         ></video>
@@ -118,18 +118,19 @@ export default {
       say: '',
       isNone: true,
       chart:null,
-      index:0
+      index:0,
+      viedoList:[require('../../assets/video/v01_ (3).mp4'),require('../../assets/video/v01_ (2) (1).mp4'),require('../../assets/video/v01_ (1).mp4')]
     };
   },
   computed:{...mapState(['userData'])},
   methods: {
     onChange(index) {
       this.index = index
-      this.getChart()
-      var player = document.getElementById(`player${index}`);
+      this.getChart(this.swiperList[index].id)
+      let player = document.getElementById(`player${index}`);
       if (player.paused) {
         this.swiperList.forEach((item, s_index) => {
-          if (s_index == index) {
+          if (s_index === index) {
             document.getElementById(`player${s_index}`).play();
             item.play = true;
           } else {
@@ -143,6 +144,7 @@ export default {
           item.play = false;
         });
       }
+      this.show = false
     },
     async likeIT(id){
       let {data} = await this.$axios({
@@ -187,6 +189,7 @@ export default {
     },
     async getChart(id){
       this.show = true
+
       let {data} = await this.$axios({
         url:'/tiktok/findByVisionSayVisionId',
         method:'post',
@@ -195,15 +198,15 @@ export default {
         }
       })
       this.chart = data.data
-      this.$nextTick(() =>{
-        let clientHeight = this.$refs.forum.clientHeight
-        let scrollHeight = this.$refs.forum.scrollHeight
-        this.$refs.forum.scrollTop = scrollHeight - clientHeight
-      })
+      if(data){
+        this.$nextTick(() =>{
+          let clientHeight = this.$refs.forum.clientHeight
+          let scrollHeight = this.$refs.forum.scrollHeight
+          this.$refs.forum.scrollTop = scrollHeight - clientHeight
+        })
+      }
     },
     async sendMsg(){
-      this.show = true
-
       let {data} = await this.$axios({
         url:'/studySay/save',
         method:'post',
@@ -218,10 +221,10 @@ export default {
       this.say = ''
       Toast.success('评论成功')
       await this.getChart(this.swiperList[this.index].id)
-    }
+    },
+
   },
   async mounted(){
-    console.log (fmtTime())
     await this.getVideo()
     setTimeout(() => {
       document.getElementById(`player0`).play();
@@ -286,8 +289,9 @@ header {
 }
 
 .video {
-  width: 100%;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
+  box-sizing: border-box;
   background-color: rgb(0, 0, 0);
   //background-image: linear-gradient(to bottom, #000000, #000000);
   .my-swipe .van-swipe-item {

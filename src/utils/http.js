@@ -3,7 +3,10 @@ import axios from 'axios'
 
 const $axios = axios.create({
   baseURL: "http://www.wuhuazai.com",
-  timeout: 5000
+  timeout: 5000,
+  headers:{
+    'X-token':localStorage.getItem("token")
+  }
 })
 
 // 添加请求拦截器

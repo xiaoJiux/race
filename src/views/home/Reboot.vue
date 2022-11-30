@@ -21,15 +21,6 @@
               {{item.lock}}
             </div>
           </li>
-<!--          <li   style="display: flex;flex-direction: row-reverse">-->
-<!--            <div class="u-img" style="">-->
-<!--              <img :src="userData.img" style="width: 45px;height: 45px;border-radius: 50%" alt="">-->
-<!--            </div>-->
-<!--            <div style="background-color: white;padding: 15px;border-radius: 12px 0 12px 12px;margin: 15px 10px 4px 0;">-->
-<!--              {{'1'}}-->
-<!--            </div>-->
-
-<!--          </li>-->
 
         </ul>
       </div>

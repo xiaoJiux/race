@@ -59,12 +59,7 @@
       />
       <p class="name">{{item.userName}}</p>
       <div class="card">
-        <van-image
-          fit="cover"
-          height="150px"
-          :src="item.img"
-          width="100%"
-        />
+        <img :src="item.img" style="height: 150px;width: 100%;object-fit: cover" alt="">
         <div class="box-bottom">
           <article>
             {{item.name}}

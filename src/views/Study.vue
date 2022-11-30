@@ -176,6 +176,7 @@ export default {
         method: "get",
         url: "/study/getAllUserOR"
       })
+      console.log (data)
       this.recommendList = data.data
     },
     //change触发
@@ -189,12 +190,11 @@ export default {
       })
     },
     async like(val){
-      console.log (val);
-      await joinNewLike(this.userData.id,val.id)
+      await joinNewLike(this.userData.id,val.id,1)
       await this.getRecommendList()
     }
   },
-  async created () {
+  async mounted () {
     await this.getRecommendList ()
   },
 }

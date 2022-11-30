@@ -178,7 +178,7 @@
       </div>
     </div>
     <van-popup v-model="show1" position="bottom">
-      <div class="btn" @click="callPhone2">
+      <div class="btn" @click="callPhone1">
         <van-icon color="rgb(147,147,147)" size="26" name="phone" />
         联系值班老师
       </div>
@@ -186,7 +186,7 @@
         取消
       </div>
     </van-popup>
-    <van-popup v-model="show1" position="bottom">
+    <van-popup v-model="show2" position="bottom">
       <div class="btn" @click="callPhone2">
         <van-icon color="rgb(147,147,147)" size="26" name="phone" />
         校园110热线
@@ -220,8 +220,6 @@ export default {
       show2:false
     }
   },
-  created(){
-  },
   methods:{
     async getRecommendList () {
       let { data } = await this.$axios ({
@@ -232,6 +230,7 @@ export default {
       this.hotList.push(data.data[0])
     },
     async like(val){
+      console.log (2)
       await joinHotLike(this.userData.id,val.id,1)
       await this.getRecommendList()
     },
@@ -263,10 +262,10 @@ export default {
     },
     //拨打电话
     callPhone1() {
-      window.location.href = 'tel://' + '13185021554'
+      window.location.href = 'tel://' + '12345678912'
     },
     callPhone2() {
-      window.location.href = 'tel://' + '13186021554'
+      window.location.href = 'tel://' + '13185028196'
     },
   },
   async mounted() {
