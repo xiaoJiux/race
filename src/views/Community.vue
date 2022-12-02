@@ -158,7 +158,6 @@ export default {
         url:'/posting/getAllForIndex'
       })
       this.articleList = data.data
-      console.log (this.articleList);
     },
     async getRecommendList () {
       let { data } = await this.$axios ({

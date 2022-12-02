@@ -134,7 +134,6 @@ export default {
   methods: {},
   mounted() {
     let date = getTime()
-    console.log (date)
     // date.day < 10 ? this.day = "0" + date.day : this.day = date.day
     // date.month < 10 ? this.month = "0" + date.month : this.day = date.month
     this.week = date.Week

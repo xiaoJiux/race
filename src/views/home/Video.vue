@@ -60,6 +60,7 @@
           :id="`player${index}`"
           :src="viedoList[index]"
           class="video-content"
+          preload="none"
           muted
         ></video>
       </van-swipe-item>

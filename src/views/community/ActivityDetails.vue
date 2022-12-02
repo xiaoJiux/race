@@ -47,7 +47,7 @@
           <p class="location">{{ data.location }}</p>
         </div>
         <div class="right">
-          <van-icon name="guide-o" size="20" @click="handlClick"/>
+          <van-icon name="guide-o" size="20" />
         </div>
       </div>
     </div>
@@ -118,11 +118,11 @@ export default {
     callPhone() {
       window.location.href = 'tel://' + this.data.phone
     },
-    handlClick() {
-      /* Start  判断手机是IOS还是安卓 */
-      let queryStr = `?sourceApplication=msite&lat=${this.EndXY.lat}&lon=${this.EndXY.lng}&dev=1&style=2`
-      window.location.href = `androidamap://navi${queryStr}`;
-    },
+    // handlClick() {
+    //   /* Start  判断手机是IOS还是安卓 */
+    //   let queryStr = `?sourceApplication=msite&lat=${this.EndXY.lat}&lon=${this.EndXY.lng}&dev=1&style=2`
+    //   window.location.href = `androidamap://navi${queryStr}`;
+    // },
     //报名活动
     async joinIT() {
       let {data} = await this.$axios({

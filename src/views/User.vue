@@ -148,6 +148,7 @@ import {Toast} from "vant";
 import {mapState} from "vuex";
 import {myChart} from "@/utils/echarts";
 import { fmtTime, getTime } from "@/utils/getTime";
+import addPoint from "@/utils/addPoint";
 
 export default {
   name: "User",
@@ -193,7 +194,7 @@ export default {
     },
     //签到
     async signIn(){
-      let {message,code} = await this.$axios({
+      let {code} = await this.$axios({
         method:'post',
         url:'/clock/save',
         data:{
@@ -203,6 +204,7 @@ export default {
       })
       if(code === 0){
         Toast.success('签到成功!')
+        await addPoint('签到',this.userData.id)
       }else{
         Toast("对不起今天你已经签到过了")
       }
@@ -301,7 +303,6 @@ export default {
       }
     }
   }
-
   .list {
     margin-top: 20px;
 
@@ -347,7 +348,6 @@ export default {
       }
     }
   }
-
 }
 
 </style>

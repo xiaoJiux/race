@@ -177,7 +177,7 @@
         </div>
       </div>
     </div>
-    <van-popup v-model="show1" position="bottom">
+    <van-popup v-model="show2" position="bottom">
       <div class="btn" @click="callPhone1">
         <van-icon color="rgb(147,147,147)" size="26" name="phone" />
         联系值班老师
@@ -186,7 +186,7 @@
         取消
       </div>
     </van-popup>
-    <van-popup v-model="show2" position="bottom">
+    <van-popup v-model="show1" position="bottom">
       <div class="btn" @click="callPhone2">
         <van-icon color="rgb(147,147,147)" size="26" name="phone" />
         校园110热线
@@ -230,7 +230,6 @@ export default {
       this.hotList.push(data.data[0])
     },
     async like(val){
-      console.log (2)
       await joinHotLike(this.userData.id,val.id,1)
       await this.getRecommendList()
     },

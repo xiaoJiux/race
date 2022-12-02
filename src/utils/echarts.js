@@ -2,6 +2,9 @@ import * as echarts from 'echarts';
 
 export function myChart(domRef,value) {
   let chart = echarts.init(domRef)
+  if(!value){
+    value = [0,0,0,0,0]
+  }
   chart.setOption({
     radar: [
       {

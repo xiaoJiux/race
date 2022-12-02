@@ -36,6 +36,7 @@ import { Toast } from "vant";
 import { mapState } from "vuex";
 import { joinNewLike } from "@/utils/joinNewLike";
 import { joinHotLike } from "@/utils/joinHotLike";
+import addPoint from "@/utils/addPoint";
 
 export default {
   name: "NewsDeatils",
@@ -47,7 +48,8 @@ export default {
       nData:null,
       chartList:null,
       col:false,
-      lik:false
+      lik:false,
+      timer:null
     }
   },
   computed:{...mapState(["userData"])},
@@ -109,6 +111,16 @@ export default {
     this.nID = this.$route.query.id
     await this.getNews()
     await this.getChart()
+  },
+  async mounted(){
+    this.timer = setTimeout(()=>{
+      addPoint('阅读资讯',this.userData.id)
+    },15000)
+  },
+  beforeDestroy(){
+    if(this.timer){
+      clearInterval(this.timer)
+    }
   }
 
 }

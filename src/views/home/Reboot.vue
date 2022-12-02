@@ -35,6 +35,7 @@
 <script>
 import { mapState } from "vuex";
 import Header from "@/components/Header";
+import { Toast } from "vant";
 
 export default {
   name: "Reboot",
@@ -71,10 +72,13 @@ export default {
         })
         this.chartList.push(data.data[0])
         this.msg = ''
-        console.log (this.chartList)
+
         this.$nextTick(()=>{
           this.gotoBottom()
         })
+      }else{
+        Toast.fail('服务器出错了,请稍后再试~')
+        this.msg = ''
       }
     },
     gotoBottom(){

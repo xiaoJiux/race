@@ -13,7 +13,7 @@
       <div class="collect-like">
         <div class="item">
           <div class="left">
-            点赞 <span>{{nData.likeCCOUNT}}</span>
+            点赞 <span>{{nData.likeCOUNT}}</span>
           </div>
           <van-icon :color="col?'rgb(96, 217, 212)':''"  name="like-o" size="18" @click="collect" />
         </div>
@@ -35,6 +35,7 @@ import { fmtTime } from "@/utils/getTime";
 import { Toast } from "vant";
 import { mapState } from "vuex";
 import { joinNewLike } from "@/utils/joinNewLike";
+import addPoint from "@/utils/addPoint";
 
 export default {
   name: "NewsDeatils",
@@ -46,7 +47,8 @@ export default {
       nData:null,
       chartList:null,
       col:false,
-      lik:false
+      lik:false,
+      timer:null
     }
   },
   computed:{...mapState(["userData"])},
@@ -60,6 +62,7 @@ export default {
           id:this.nID
         }
       })
+      console.log (data)
       this.nData = data.data[0]
     },
     //获取评论
@@ -107,6 +110,16 @@ export default {
     this.nID = this.$route.query.id
     await this.getNews()
     await this.getChart()
+  },
+  async mounted(){
+    this.timer = setTimeout(()=>{
+      addPoint('阅读资讯',this.userData.id)
+    },15000)
+  },
+  beforeDestroy(){
+    if(this.timer){
+      clearInterval(this.timer)
+    }
   }
 
 }

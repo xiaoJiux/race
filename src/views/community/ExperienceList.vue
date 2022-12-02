@@ -68,7 +68,7 @@ export default {
         url:'/posting/getAllUser',
         method:'get'
       })
-      this.data = data.data
+      this.data = data.data.reverse()
     },
     async like(posting){
       await clickGood(this.userData.id,posting)
