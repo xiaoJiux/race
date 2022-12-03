@@ -70,13 +70,13 @@
         <img alt="" src="../assets/user/4.png">
         <p>我的心得</p>
       </div>
-      <div class="item" @click="$router.push({
+      <div class="item" v-if="userData.level>2" @click="$router.push({
       path:'/issuanceActivity'
       })">
         <img alt="" src="../assets/user/5.png">
         <p>发布活动</p>
       </div>
-      <div class="item" @click="$router.push({
+      <div class="item" v-if="userData.level>2" @click="$router.push({
       path:'/audit'
       })">
         <img alt="" src="../assets/user/6.png">

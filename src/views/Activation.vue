@@ -24,6 +24,7 @@
           v-model="password"
           :rules="[{ required: true, message: '请填写密码' }]"
           label="修改密码"
+          type="password"
           name="password"
           style="background-color:transparent;font-size: 16px;padding: 15px 18px;"
         />
